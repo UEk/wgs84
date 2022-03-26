@@ -1,0 +1,10 @@
+# directories
+.vscode/
+dist/
+coverage/
+node_modules/
+old-src/
+docs/
+example/
+# files
+tsconfig.json

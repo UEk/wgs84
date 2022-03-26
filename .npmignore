@@ -1,0 +1,13 @@
+_*/
+.*/
+coverage/
+example/
+log/
+!node_modules/
+src/
+test/
+.*
+*.log
+*.json
+*.js
+*.properties

@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "CommonJS",
+        "declaration": true,
+        "lib": ["ES2016", "ES2017", "ES2018", "ES2019", "ES2020", "dom"],
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "outDir": "dist/",
+        "removeComments": true,
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "resolveJsonModule": true,
+        "strict": true,
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "types": ["node", "jest"]
+    },
+    "exclude": ["./dist/", "./coverage/", "./report/", "unused_src"],
+    "include": ["./src/**/*"]
+}

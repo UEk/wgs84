@@ -1,0 +1,184 @@
+extends:
+  - eslint:recommended
+  - plugin:unicorn/recommended
+  - plugin:jest/recommended
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:import/typescript
+  - plugin:yaml/recommended
+plugins:
+  - "@typescript-eslint"
+  - jest
+  - unicorn
+  - json
+  - yaml
+# Prevent issues with misspelling of file paths and import names.
+  - import
+# Auto-fixable import sorting.
+  - simple-import-sort
+# Detect bugs and suspicious patterns in the code.
+  - sort-keys-fix
+  - sort-class-members
+env:
+  es6: true
+  node: true
+  jest: true
+parser: "@typescript-eslint/parser"
+settings:
+  import/parsers:
+# We only autofix imports in typescript files.
+    "@typescript-eslint/parser":
+      - ".ts"
+  import/resolver:
+    node:
+      extensions:
+        - ".ts"
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+  project: tsconfig.json
+# Bug workaround: https://githubcom/typescript-eslint/typescript-eslint/issues/967.
+  createDefaultProgram: true
+overrides:
+# Rule exceptions for files under the server folder.
+  - files:
+      - "*/server/*.ts"
+    rules:
+      no-inner-declarations: off
+# Rule exceptions for test files & scripts.
+  - files:
+      - "*.test.*"
+      # - "*.spec.*"
+      - "*.disable"
+      - "scripts/*.ts"
+    rules:
+# Some test cases require unsafe assumptions.
+      "@typescript-eslint/no-explicit-any": off
+      "@typescript-eslint/unbound-method": off
+      "@typescript-eslint/require-await": off
+      "@typescript-eslint/ban-ts-ignore": off
+      "@typescript-eslint/no-untyped-public-signature": off
+      "unicorn/consistent-function-scoping": off
+      "jest/no-disabled-tests": off
+      no-console: off
+rules:
+# Unsafe String('text') not equal new String('text') | type string !== type object.
+  unicorn/new-for-builtins: off
+  no-async-promise-executor: off
+  no-return-assign: error
+  curly: error
+  unicorn/number-literal-case: off
+  unicorn/prefer-node-protocol: off
+  unicorn/prefer-code-point: off
+# Enforce filename to be kebabCase.
+  unicorn/filename-case:
+    - error
+    - case: kebabCase
+# Only plugin: simple-import-sort are allowed to sort imports.
+  sort-imports: off
+  import/order: off
+# Complements simple-import-sort.
+  import/first: error
+  import/newline-after-import: error
+  import/no-duplicates: error
+# We sort import with --fix.
+  simple-import-sort/imports: error
+  simple-import-sort/exports: error
+# Define structure for class.
+  sort-class-members/sort-class-members:
+    - error
+    - order:
+        - "[static-properties]"
+        - "[properties]"
+        - "[conventional-private-properties]"
+        - constructor
+        - "[static-methods]"
+        - "[methods]"
+        - "[conventional-private-methods]"
+      accessorPairPositioning: getThenSet
+# Enforce alphabetical sorting of object parameters.
+  sort-keys-fix/sort-keys-fix: warn
+  no-throw-literal: error
+# Enforce function to have name.
+  func-names:
+    - error
+    - always
+# Forbid == (2 equal symbol).
+  eqeqeq:
+    - error
+    - always
+# We forbid export default.
+  import/no-default-export: error
+# Require line break before "export" and function.
+  padding-line-between-statements:
+    - error
+    - blankLine: always
+      prev: "*"
+      next: function
+    - blankLine: always
+      prev: "*"
+      next: export
+# No confusing function rename.
+  func-name-matching:
+    - error
+    - considerPropertyDescriptor: true
+# Code consistency.
+  no-confusing-arrow: error
+  no-useless-computed-key: error
+  no-var: error
+  prefer-const: error
+  prefer-spread: error
+  no-console: error
+  no-void: error
+  unicorn/prevent-abbreviations: off
+  "@typescript-eslint/restrict-template-expressions": off
+  "@typescript-eslint/no-misused-promises": off
+  "@typescript-eslint/no-inferrable-types": off
+# Unused variables increase readability in special cases.
+  "@typescript-eslint/no-unused-vars": off
+  "@typescript-eslint/no-namespace":
+    - error
+    - allowDeclarations: false
+      allowDefinitionFiles: false
+# Public modifier is not allowed on parameters and constructor arguments.
+  "@typescript-eslint/explicit-member-accessibility":
+    - error
+    - accessibility: explicit
+      overrides:
+        constructors: no-public
+        properties: no-public
+# Help out with readability.
+  "@typescript-eslint/no-empty-interface": off
+# Enforce explicit return in public class function.
+  # "@typescript-eslint/no-untyped-public-signature": error
+# Enforce explicit return in function.
+  "@typescript-eslint/explicit-function-return-type": error
+  "@typescript-eslint/explicit-module-boundary-types": error
+# Conflict with class declarations in schema.
+  "@typescript-eslint/interface-name-prefix": off
+# Prettier take care of formatting.
+  "@typescript-eslint/member-delimiter-style": off
+  "@typescript-eslint/consistent-type-assertions":
+    - error
+    - assertionStyle: as
+  "@typescript-eslint/no-parameter-properties":
+    - error
+    - allows:
+        - private readonly
+        - protected readonly
+        - public readonly
+  # Disabled becouse of conflict with "sort-class-members/sort-class-members"
+  "@typescript-eslint/member-ordering": off
+  "@typescript-eslint/no-extra-non-null-assertion": error
+  "@typescript-eslint/no-misused-new": error
+  "@typescript-eslint/no-useless-constructor": error
+  "@typescript-eslint/prefer-function-type": error
+  "@typescript-eslint/prefer-nullish-coalescing": error
+  "@typescript-eslint/require-array-sort-compare": error
+  "@typescript-eslint/restrict-plus-operands": error
+  "@typescript-eslint/unified-signatures": error
+  "@typescript-eslint/prefer-readonly": error
+  "@typescript-eslint/prefer-includes": error

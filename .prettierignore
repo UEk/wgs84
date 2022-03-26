@@ -1,0 +1,9 @@
+# directories
+.ignore/
+.vscode/
+node_modules/
+dist/
+# files
+.eslintrc
+.prettierrc
+package-lock.json

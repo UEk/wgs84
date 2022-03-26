@@ -1,0 +1,26 @@
+parser: typescript
+printWidth: 100
+tabWidth: 4
+singleQuote: true
+semi: true
+quoteProps: consistent
+arrowParens: always
+bracketSpacing: true
+trailingComma: "none"
+overrides:
+  - files: "*.json"
+    options:
+      parser: json
+  - files: "*.yaml"
+    options:
+      parser: yaml
+      tabWidth: 2
+      singleQuote: false
+  - files: "*.yml"
+    options:
+      parser: yaml
+      tabWidth: 2
+      singleQuote: false
+  - files: "*.md"
+    options:
+      parser: markdown
