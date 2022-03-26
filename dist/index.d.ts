@@ -24,7 +24,8 @@ export declare class PointWGS84 {
 }
 export declare function distanceN(x: PointWGS84, y: PointWGS84): number;
 export declare function distanceE(x: PointWGS84, y: PointWGS84): number;
-export declare function distanceTotal(x: PointWGS84, y: PointWGS84): number;
+export declare function distance(x: PointWGS84, y: PointWGS84): number;
+export declare function bearing(x: PointWGS84, y: PointWGS84): number;
 export declare function pointNorth(x: PointWGS84, dN: number): PointWGS84;
 export declare function pointEast(x: PointWGS84, dE: number): PointWGS84;
 export declare function pointUp(x: PointWGS84, dH: number): PointWGS84;

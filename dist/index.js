@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pointUp = exports.pointEast = exports.pointNorth = exports.distanceTotal = exports.distanceE = exports.distanceN = exports.PointWGS84 = void 0;
+exports.pointUp = exports.pointEast = exports.pointNorth = exports.bearing = exports.distance = exports.distanceE = exports.distanceN = exports.PointWGS84 = void 0;
 class PointWGS84 {
     constructor(lat, lon, height) {
         this.R = 6378.137 * 1000;
@@ -70,10 +70,14 @@ function distanceE(x, y) {
     return x.R2 * Math.cos(x.latInRad) * (y.lonInRad - x.lonInRad);
 }
 exports.distanceE = distanceE;
-function distanceTotal(x, y) {
+function distance(x, y) {
     return Math.sqrt(distanceN(x, y) * distanceN(x, y) + distanceE(x, y) * distanceE(x, y));
 }
-exports.distanceTotal = distanceTotal;
+exports.distance = distance;
+function bearing(x, y) {
+    return (radToDeg(Math.atan2(distanceE(x, y), distanceN(x, y))) + 360) % 360;
+}
+exports.bearing = bearing;
 function pointNorth(x, dN) {
     return new PointWGS84(radToDeg(x.latInRad + dN / x.R1), x.lon, x.height);
 }

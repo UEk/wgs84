@@ -1,7 +1,8 @@
 import {
+    bearing,
+    distance,
     distanceE,
     distanceN,
-    distanceTotal,
     GeoJson,
     pointEast,
     pointNorth,
@@ -59,26 +60,30 @@ describe('My WGS84 library', function toast() {
             const p1: PointWGS84 = new PointWGS84(lat + 1 / 60, lon + 1 / 60);
             expect(distanceN(p, p1)).toBeCloseTo(dN);
             expect(distanceE(p, p1)).toBeCloseTo(dE, 1); // No cm precision...
-            expect(distanceTotal(p, p1)).toBeCloseTo(d);
+            expect(distance(p, p1)).toBeCloseTo(d);
+            expect(bearing(p, p1)).toBeCloseTo(45, 0);
         });
         test('2nd quadrant, East positive, north negative', function toast() {
             const p2 = new PointWGS84(lat - 1 / 60, lon + 1 / 60);
             expect(distanceN(p, p2)).toBeCloseTo(-dN);
             expect(distanceE(p, p2)).toBeCloseTo(dE, 1); // No cm precision...
-            expect(distanceTotal(p, p2)).toBeCloseTo(d);
+            expect(distance(p, p2)).toBeCloseTo(d);
+            expect(bearing(p, p2)).toBeCloseTo(135, 0);
         });
 
         test('3rd quadrant, East and north negative', function toast() {
             const p3 = new PointWGS84(lat - 1 / 60, lon - 1 / 60);
             expect(distanceN(p, p3)).toBeCloseTo(-dN);
             expect(distanceE(p, p3)).toBeCloseTo(-dE, 1); // No cm precision...
-            expect(distanceTotal(p, p3)).toBeCloseTo(d);
+            expect(distance(p, p3)).toBeCloseTo(d);
+            expect(bearing(p, p3)).toBeCloseTo(225, 0);
         });
         test('4th quadrant, East negative and north positive', function toast() {
             const p4 = new PointWGS84(lat + 1 / 60, lon - 1 / 60);
             expect(distanceN(p, p4)).toBeCloseTo(dN);
             expect(distanceE(p, p4)).toBeCloseTo(-dE, 1); // No cm precision...
-            expect(distanceTotal(p, p4)).toBeCloseTo(d);
+            expect(distance(p, p4)).toBeCloseTo(d);
+            expect(bearing(p, p4)).toBeCloseTo(315, 0);
         });
     });
 
@@ -98,25 +103,25 @@ describe('My WGS84 library', function toast() {
             const p1 = new PointWGS84(lat + 1 / 60, lon + 1 / 60);
             expect(distanceN(p, p1)).toBeCloseTo(dN);
             expect(distanceE(p, p1)).toBeCloseTo(dE);
-            expect(distanceTotal(p, p1)).toBeCloseTo(d);
+            expect(distance(p, p1)).toBeCloseTo(d);
         });
         test('2nd quadrant, East positive, north negative', function toast() {
             const p2 = new PointWGS84(lat - 1 / 60, lon + 1 / 60);
             expect(distanceN(p, p2)).toBeCloseTo(-dN);
             expect(distanceE(p, p2)).toBeCloseTo(dE);
-            expect(distanceTotal(p, p2)).toBeCloseTo(d);
+            expect(distance(p, p2)).toBeCloseTo(d);
         });
         test('3rd quadrant, East and north negative', function toast() {
             const p3 = new PointWGS84(lat - 1 / 60, lon - 1 / 60);
             expect(distanceN(p, p3)).toBeCloseTo(-dN);
             expect(distanceE(p, p3)).toBeCloseTo(-dE);
-            expect(distanceTotal(p, p3)).toBeCloseTo(d);
+            expect(distance(p, p3)).toBeCloseTo(d);
         });
         test('4th quadrant, East negative and north positive', function toast() {
             const p4 = new PointWGS84(lat + 1 / 60, lon - 1 / 60);
             expect(distanceN(p, p4)).toBeCloseTo(dN);
             expect(distanceE(p, p4)).toBeCloseTo(-dE);
-            expect(distanceTotal(p, p4)).toBeCloseTo(d);
+            expect(distance(p, p4)).toBeCloseTo(d);
         });
     });
 
@@ -136,7 +141,7 @@ describe('My WGS84 library', function toast() {
         const p3 = new PointWGS84(lat - 1 / (60 * 60), lon - 1 / (60 * 60));
         expect(distanceN(p, p3)).toBeCloseTo(-dN);
         expect(distanceE(p, p3)).toBeCloseTo(-dE);
-        expect(distanceTotal(p, p3)).toBeCloseTo(d);
+        expect(distance(p, p3)).toBeCloseTo(d);
     });
 
     test('should be able to calculate a longer distance at 55 deg North', function toast() {

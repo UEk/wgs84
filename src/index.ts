@@ -142,8 +142,19 @@ export function distanceE(x: PointWGS84, y: PointWGS84): number {
  * @param y the resulting point
  * @returns meters
  */
-export function distanceTotal(x: PointWGS84, y: PointWGS84): number {
+export function distance(x: PointWGS84, y: PointWGS84): number {
     return Math.sqrt(distanceN(x, y) * distanceN(x, y) + distanceE(x, y) * distanceE(x, y));
+}
+
+/**
+ * Calculates the bearing from x point to y point in the plane
+ * @param x the origin point
+ * @param y the target point
+ * @returns meters
+ */
+export function bearing(x: PointWGS84, y: PointWGS84): number {
+    // mod(atan2(distance_East, distance_North), 2*pi)
+    return (radToDeg(Math.atan2(distanceE(x, y), distanceN(x, y))) + 360) % 360;
 }
 
 /**

@@ -2,11 +2,12 @@
 
 ## Introduction
 
-A small library fully implemented in Typescript to handle WGS84 coordinates and distances in meters between them. Will parse and give output in GeoJSON if needed.
+A tiny library fully implemented in Typescript to handle WGS84 coordinates and "small" distances in meters between them, based on a local, flat earth approximation.
 
-Functions and classes will throw if fed impossible values, e.g. lat >90 deg. Make sure to handle that!
-
-No dependencies to other NPM modules.
+-   Will parse and give output in GeoJSON if needed.
+-   No dependencies to other NPM modules.
+-   The math is based on [Aviation Formulary V1.47 by Ed Williams](https://edwilliams.org/avform147.htm#flat).
+-   Functions and classes will throw if fed impossible values, e.g. lat >90 deg. Make sure to handle that!
 
 ## Getting Started
 
@@ -47,4 +48,4 @@ const p1: GeoJson = pointEast(pointNorth(p, 100), 200).geoJson;
 
 # Build and Test
 
-All classes and major functions are unit tested.
+All classes and functions are unit tested.
