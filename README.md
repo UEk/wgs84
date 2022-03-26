@@ -4,6 +4,8 @@
 
 A small library fully implemented in Typescript to handle WGS84 coordinates and distances in meters between them. Will parse and give output in GeoJSON if needed.
 
+Functions and classes will throw if fed impossible values, e.g. lat >90 deg. Make sure to handle that!
+
 No dependencies to other NPM modules.
 
 ## Getting Started
