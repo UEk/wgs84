@@ -20,7 +20,7 @@
         "clean": "npx shx rm -rf ./coverage/ ./report/ ./dist/",
         "build": "tsc --build tsconfig.json",
         "test": "npm run clean && npx jest --clearCache && jest --verbose --coverage --color --modulePathIgnorePatterns=./dist/ && npm run build",
-        "type_doc": "npx typedoc src/index.ts --excludeNotDocumented"
+        "type_doc": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/index.ts --excludeNotDocumented"
     },
     "devDependencies": {
         "@types/jest": "^27.4.1",
@@ -44,6 +44,7 @@
         "ts-jest": "^27.1.4",
         "ts-node": "^10.7.0",
         "typedoc": "^0.22.13",
+        "typedoc-plugin-markdown": "^3.11.14",
         "typescript": "^4.6.3"
     }
 }

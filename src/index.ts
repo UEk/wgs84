@@ -8,7 +8,8 @@ export interface Point {
 }
 
 /**
- * creates a GeoJSON Point, will throw for impossible input
+ * creates a GeoJSON Point
+ * will throw for impossible input
  * @param lat in degrees, has to be -90 < lat < 90
  * @param lon in degrees, has to be -180 <= lon < 180
  * @param height in meters
@@ -33,6 +34,7 @@ const eSquared: number = f * (2 - f);
 
 /**
  * The meridional radius of curvature at a certain geographical position
+ * will throw for impossible input
  * @param position The current position
  * @returns meters
  */
@@ -43,7 +45,8 @@ export function R1(position: Point): number {
 }
 
 /**
- *  the radius of curvature in the prime vertical at a certain geographical position
+ * The radius of curvature in the prime vertical at a certain geographical position
+ * will throw for impossible input
  * @param position The current position
  * @returns meters
  */
@@ -55,6 +58,7 @@ export function R2(position: Point): number {
 
 /**
  * Calculates the distance in meters along a northern meridian
+ * will throw for impossible input
  * @param origin the starting point
  * @param target the ending point
  * @returns meters
@@ -69,6 +73,7 @@ export function distanceNorth(origin: Point, target: Point): number {
 
 /**
  * Calculates the distance in meters along an eastern meridian
+ * will throw for impossible input
  * @param origin the starting point
  * @param target the ending point
  * @returns meters
@@ -99,6 +104,7 @@ export function distanceUp(origin: Point, target: Point): number {
 /**
  * Calculates the distance in meters between origin and target
  * Will take height into consideration, if given for both points
+ * will throw for impossible input
  * @param origin the origin point
  * @param target the resulting point
  * @returns meters
@@ -120,6 +126,7 @@ export function distance(origin: Point, target: Point): number {
 /**
  * Calculates the bearing from origin to target in the plane
  * with 0 degrees being north, and 90 degrees being east
+ * will throw for impossible input
  * @param origin the origin point
  * @param target the target point
  * @returns degrees
@@ -136,6 +143,7 @@ export function bearing(origin: Point, target: Point): number {
 
 /**
  * Gives a new point at a distance dN north of the current point
+ * will throw for impossible input
  * @param origin the origin point
  * @param dN the distance along a northern meridian, negative number gives distance to south
  * @returns
@@ -154,6 +162,7 @@ export function pointNorth(origin: Point, dN: number): Point {
 
 /**
  * Gives a new point at a distance dE east of the current point
+ * will throw for impossible input
  * @param origin the origin point
  * @param dE the distance along an eastern meridian, negative number gives distance to west
  * @returns
@@ -174,6 +183,7 @@ export function pointEast(origin: Point, dE: number): Point {
 
 /**
  * Gives a new point at a distance dE east of the current point
+ * will throw for impossible input
  * @param origin the origin point
  * @param dH the distance up in meters, negative number gives a lower height
  * @returns
