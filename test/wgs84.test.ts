@@ -240,7 +240,7 @@ describe('My WGS84 GeoJson library', function toast() {
             expect(p1.coordinates[0]).toBeCloseTo(lon, 6);
             expect(p1.coordinates[2]).toBeCloseTo(133);
         });
-        test('that the point functions are transmutative', function toast() {
+        test('that the transitions in distanceX() functions are approximately transmutative', function toast() {
             // distance of 1 second (1/60 of a degree) at N30
             // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
             // 15°	110.649 km	107.550 km
@@ -254,10 +254,11 @@ describe('My WGS84 GeoJson library', function toast() {
             const deltaN = 100;
             const deltaE = 200;
             const deltaH = 80;
-            const p2 = pointNorth(pointEast(pointUp(p, deltaH), deltaE), deltaN);
-            expect(p2.coordinates[1]).toBeCloseTo(lat + 0.1 / 110.649, 6);
-            expect(p2.coordinates[0]).toBeCloseTo(lon + 0.2 / 107.55, 6);
-            expect(p2.coordinates[2]).toBeCloseTo(630);
+            const p2: Point = pointNorth(pointEast(pointUp(p, deltaH), deltaE), deltaN);
+            const p3: Point = pointUp(pointEast(pointNorth(p, deltaN), deltaE), deltaH);
+            expect(p2.coordinates[0]).toBeCloseTo(p3.coordinates[0], 7);
+            expect(p2.coordinates[1]).toBeCloseTo(p3.coordinates[1], 7);
+            expect(p2.coordinates[2]).toBeCloseTo(p3.coordinates[2], 7);
         });
     });
     describe('should throw if given incorrect inputs', function toast() {
@@ -266,17 +267,23 @@ describe('My WGS84 GeoJson library', function toast() {
         const height = 33;
         const p: Point = { coordinates: [lon, lat, height], type: 'Point' };
 
-        test('height should throw if point does not have it', function toast() {
+        test('distanceUp should throw if point does not have height', function toast() {
             const p1: Point = { coordinates: [20, 0], type: 'Point' };
             expect(() => {
                 distanceUp(p, p1);
             }).toThrowError();
         });
-        test('dist should throw if given invalid GeoJson point', function toast() {
+        test('distance should throw if given invalid GeoJson point', function toast() {
             const p1: Point = { coordinates: [20], type: 'Point' };
             expect(() => {
                 distance(p, p1);
             }).toThrowError();
+        });
+        test('distance should throw if lat > 90 degrees', function toast() {
+            const p1: Point = { coordinates: [15, 92], type: 'Point' };
+            expect(() => {
+                distance(p, p1);
+            }).toThrowError('out of range');
         });
         test('point should throw if latitude > 90 degrees', function toast() {
             expect(() => {
@@ -294,10 +301,10 @@ describe('My WGS84 GeoJson library', function toast() {
                 R1(p1);
             }).toThrowError('out of range');
         });
-        test('distance should throw if lat > 90 degrees', function toast() {
-            const p1: Point = { coordinates: [15, 92], type: 'Point' };
+        test('R2 should throw if lat > 90 degrees', function toast() {
+            const p2: Point = { coordinates: [15, 92], type: 'Point' };
             expect(() => {
-                distance(p, p1);
+                R2(p2);
             }).toThrowError('out of range');
         });
     });
