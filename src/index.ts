@@ -7,6 +7,23 @@ export interface Point {
     coordinates: number[];
 }
 
+/**
+ * creates a GeoJSON Point, will throw for impossible input
+ * @param lat in degrees, has to be -90 < lat < 90
+ * @param lon in degrees, has to be -180 <= lon < 180
+ * @param height in meters
+ * @returns GeoJSON Point
+ */
+export function point(lat: number, lon: number, height?: number): Point {
+    if (-90 < lat && lat < 90 && -180 <= lon && lon <= 180) {
+        return height
+            ? { coordinates: [lon, lat, height], type: 'Point' }
+            : { coordinates: [lon, lat], type: 'Point' };
+    } else {
+        throw new Error(`Lat=$(lat)) or lon=$(lon) out of range`);
+    }
+}
+
 // Earth equatorial radius (in meters)
 const R: number = 6378.137 * 1000;
 // the flattening of the earth in WGS84
@@ -20,6 +37,7 @@ const eSquared: number = f * (2 - f);
  * @returns meters
  */
 export function R1(position: Point): number {
+    validCoord(position);
     const lat = degToRad(position.coordinates[1]);
     return (R * (1 - eSquared)) / Math.pow(1 - eSquared * Math.pow(Math.sin(lat), 2), 3 / 2);
 }
@@ -30,6 +48,7 @@ export function R1(position: Point): number {
  * @returns meters
  */
 export function R2(position: Point): number {
+    validCoord(position);
     const lat = degToRad(position.coordinates[1]);
     return R / Math.sqrt(1 - eSquared * Math.pow(Math.sin(lat), 2));
 }
@@ -41,6 +60,8 @@ export function R2(position: Point): number {
  * @returns meters
  */
 export function distanceNorth(origin: Point, target: Point): number {
+    validCoord(origin);
+    validCoord(target);
     const xLat = degToRad(origin.coordinates[1]);
     const yLat = degToRad(target.coordinates[1]);
     return R1(origin) * (yLat - xLat);
@@ -53,6 +74,8 @@ export function distanceNorth(origin: Point, target: Point): number {
  * @returns meters
  */
 export function distanceEast(origin: Point, target: Point): number {
+    validCoord(origin);
+    validCoord(target);
     const xLat = degToRad(origin.coordinates[1]);
     const xLon = degToRad(origin.coordinates[0]);
     const yLon = degToRad(target.coordinates[0]);
@@ -102,6 +125,8 @@ export function distance(origin: Point, target: Point): number {
  * @returns degrees
  */
 export function bearing(origin: Point, target: Point): number {
+    validCoord(origin);
+    validCoord(target);
     // mod(atan2(distance_East, distance_North), 2*pi)
     return (
         (radToDeg(Math.atan2(distanceEast(origin, target), distanceNorth(origin, target))) + 360) %
@@ -116,6 +141,7 @@ export function bearing(origin: Point, target: Point): number {
  * @returns
  */
 export function pointNorth(origin: Point, dN: number): Point {
+    validCoord(origin);
     const lat = radToDeg(degToRad(origin.coordinates[1]) + dN / R1(origin));
     const lon = origin.coordinates[0];
     if (origin.coordinates[2]) {
@@ -133,6 +159,7 @@ export function pointNorth(origin: Point, dN: number): Point {
  * @returns
  */
 export function pointEast(origin: Point, dE: number): Point {
+    validCoord(origin);
     const lat = origin.coordinates[1];
     const lon = radToDeg(
         degToRad(origin.coordinates[0]) + dE / (R2(origin) * Math.cos(degToRad(lat)))
@@ -164,4 +191,17 @@ function degToRad(deg: number): number {
 
 function radToDeg(rad: number): number {
     return (rad * 180) / Math.PI;
+}
+
+function validCoord(p: Point): boolean {
+    if (
+        -90 <= p.coordinates[1] &&
+        p.coordinates[1] < 90 &&
+        -180 <= p.coordinates[0] &&
+        p.coordinates[0] <= 180
+    ) {
+        return true;
+    } else {
+        throw new Error(`Lat=$(lat)) or lon=$(lon) out of range`);
+    }
 }

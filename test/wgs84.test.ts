@@ -5,12 +5,33 @@ import {
     distanceNorth,
     distanceUp,
     Point,
+    point,
     pointEast,
     pointNorth,
-    pointUp
+    pointUp,
+    R1,
+    R2
 } from '../src/';
 
 describe('My WGS84 GeoJson library', function toast() {
+    describe('should be able to create a GeoJSON Point', function toast() {
+        test('only lat, lon', function toast() {
+            const lat = 0;
+            const lon = 20;
+            const p = point(lat, lon);
+            expect(p.coordinates[0]).toBeCloseTo(lon, 6);
+            expect(p.coordinates[1]).toBeCloseTo(lat, 6);
+        });
+        test('lat, lon, height', function toast() {
+            const lat = 0;
+            const lon = 20;
+            const height = 33;
+            const p = point(lat, lon, height);
+            expect(p.coordinates[0]).toBeCloseTo(lon, 6);
+            expect(p.coordinates[1]).toBeCloseTo(lat, 6);
+            expect(p.coordinates[2]).toBeCloseTo(height, 6);
+        });
+    });
     describe('should be able to calculate correct distances at the equator', function toast() {
         // distance of 1 second (1/60 of a degree) at the equator
         // See https://en.wikipedia.org/wiki/Latitude for length of a degree
@@ -249,13 +270,35 @@ describe('My WGS84 GeoJson library', function toast() {
             const p1: Point = { coordinates: [20, 0], type: 'Point' };
             expect(() => {
                 distanceUp(p, p1);
-            }).toThrow();
+            }).toThrowError();
         });
         test('dist should throw if given invalid GeoJson point', function toast() {
             const p1: Point = { coordinates: [20], type: 'Point' };
             expect(() => {
                 distance(p, p1);
-            }).toThrow();
+            }).toThrowError();
+        });
+        test('point should throw if latitude > 90 degrees', function toast() {
+            expect(() => {
+                point(92, 15, 20);
+            }).toThrowError('out of range');
+        });
+        test('point should throw if longitude > 180 degrees', function toast() {
+            expect(() => {
+                point(22, 182, 20);
+            }).toThrowError('out of range');
+        });
+        test('R1 should throw if lat > 90 degrees', function toast() {
+            const p1: Point = { coordinates: [15, 92], type: 'Point' };
+            expect(() => {
+                R1(p1);
+            }).toThrowError('out of range');
+        });
+        test('distance should throw if lat > 90 degrees', function toast() {
+            const p1: Point = { coordinates: [15, 92], type: 'Point' };
+            expect(() => {
+                distance(p, p1);
+            }).toThrowError('out of range');
         });
     });
 });

@@ -2,6 +2,7 @@ export interface Point {
     type: 'Point';
     coordinates: number[];
 }
+export declare function point(lat: number, lon: number, height?: number): Point;
 export declare function R1(position: Point): number;
 export declare function R2(position: Point): number;
 export declare function distanceNorth(origin: Point, target: Point): number;
