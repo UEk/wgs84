@@ -1,93 +1,86 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pointUp = exports.pointEast = exports.pointNorth = exports.bearing = exports.distance = exports.distanceE = exports.distanceN = exports.PointWGS84 = void 0;
-class PointWGS84 {
-    constructor(lat, lon, height) {
-        this.R = 6378.137 * 1000;
-        this.f = 1 / 298.257223563;
-        this.eSquared = this.f * (2 - this.f);
-        if (-90 <= lat && lat <= 90) {
-            this.myLatInRad = degToRad(lat);
-        }
-        else {
-            throw new Error(`WGS84 Latitude=${lat} out of range`);
-        }
-        if (-180 <= lon && lon <= 180) {
-            this.myLonInRad = degToRad(lon);
-        }
-        else {
-            throw new Error(`WGS84 Longitude=${lon} out of range`);
-        }
-        this.myHeightInM = height ? height : 0;
-        this.myR1 =
-            (this.R * (1 - this.eSquared)) /
-                Math.pow(1 - this.eSquared * Math.pow(Math.sin(this.myLatInRad), 2), 3 / 2);
-        this.myR2 = this.R / Math.sqrt(1 - this.eSquared * Math.pow(Math.sin(this.myLatInRad), 2));
+exports.pointUp = exports.pointEast = exports.pointNorth = exports.bearing = exports.distance = exports.distanceUp = exports.distanceEast = exports.distanceNorth = exports.R2 = exports.R1 = void 0;
+const R = 6378.137 * 1000;
+const f = 1 / 298.257223563;
+const eSquared = f * (2 - f);
+function R1(position) {
+    const lat = degToRad(position.coordinates[1]);
+    return (R * (1 - eSquared)) / Math.pow(1 - eSquared * Math.pow(Math.sin(lat), 2), 3 / 2);
+}
+exports.R1 = R1;
+function R2(position) {
+    const lat = degToRad(position.coordinates[1]);
+    return R / Math.sqrt(1 - eSquared * Math.pow(Math.sin(lat), 2));
+}
+exports.R2 = R2;
+function distanceNorth(origin, target) {
+    const xLat = degToRad(origin.coordinates[1]);
+    const yLat = degToRad(target.coordinates[1]);
+    return R1(origin) * (yLat - xLat);
+}
+exports.distanceNorth = distanceNorth;
+function distanceEast(origin, target) {
+    const xLat = degToRad(origin.coordinates[1]);
+    const xLon = degToRad(origin.coordinates[0]);
+    const yLon = degToRad(target.coordinates[0]);
+    return R2(origin) * Math.cos(xLat) * (yLon - xLon);
+}
+exports.distanceEast = distanceEast;
+function distanceUp(origin, target) {
+    if (origin.coordinates.length === 3 && target.coordinates.length === 3) {
+        return target.coordinates[2] - origin.coordinates[2];
     }
-    static fromGeoJson(x) {
-        if ((x.type === 'Point' || x.type === 'point') &&
-            x.coordinates.length >= 2 &&
-            x.coordinates.length <= 3) {
-            return x.coordinates[2]
-                ? new PointWGS84(x.coordinates[1], x.coordinates[0], x.coordinates[2])
-                : new PointWGS84(x.coordinates[1], x.coordinates[0], 0);
-        }
-        else {
-            throw new Error('WGS84: Input is not GeoJSON  Point');
-        }
-    }
-    get lon() {
-        return radToDeg(this.myLonInRad);
-    }
-    get lat() {
-        return radToDeg(this.myLatInRad);
-    }
-    get lonInRad() {
-        return this.myLonInRad;
-    }
-    get latInRad() {
-        return this.myLatInRad;
-    }
-    get height() {
-        return this.myHeightInM;
-    }
-    get R1() {
-        return this.myR1;
-    }
-    get R2() {
-        return this.myR2;
-    }
-    get geoJson() {
-        return { coordinates: [this.lon, this.lat, this.height], type: 'Point' };
+    else {
+        throw new Error('Input is not GeoJSON Point with height.');
     }
 }
-exports.PointWGS84 = PointWGS84;
-function distanceN(x, y) {
-    return x.R1 * (y.latInRad - x.latInRad);
-}
-exports.distanceN = distanceN;
-function distanceE(x, y) {
-    return x.R2 * Math.cos(x.latInRad) * (y.lonInRad - x.lonInRad);
-}
-exports.distanceE = distanceE;
-function distance(x, y) {
-    return Math.sqrt(distanceN(x, y) * distanceN(x, y) + distanceE(x, y) * distanceE(x, y));
+exports.distanceUp = distanceUp;
+function distance(origin, target) {
+    if (origin.coordinates.length === 2 || target.coordinates.length === 2) {
+        return Math.sqrt(distanceNorth(origin, target) ** 2 + distanceEast(origin, target) ** 2);
+    }
+    else if (origin.coordinates.length === 3 && target.coordinates.length === 3) {
+        return Math.sqrt(distanceNorth(origin, target) ** 2 + distanceEast(origin, target) ** 2 + distanceUp(origin, target) ** 2);
+    }
+    else {
+        throw new Error('Inputs are not GeoJSON Points.');
+    }
 }
 exports.distance = distance;
-function bearing(x, y) {
-    return (radToDeg(Math.atan2(distanceE(x, y), distanceN(x, y))) + 360) % 360;
+function bearing(origin, target) {
+    return (radToDeg(Math.atan2(distanceEast(origin, target), distanceNorth(origin, target))) + 360) % 360;
 }
 exports.bearing = bearing;
-function pointNorth(x, dN) {
-    return new PointWGS84(radToDeg(x.latInRad + dN / x.R1), x.lon, x.height);
+function pointNorth(origin, dN) {
+    const lat = radToDeg(degToRad(origin.coordinates[1]) + dN / R1(origin));
+    const lon = origin.coordinates[0];
+    if (origin.coordinates[2]) {
+        const h = origin.coordinates[2];
+        return { coordinates: [lon, lat, h], type: 'Point' };
+    }
+    else {
+        return { coordinates: [lon, lat], type: 'Point' };
+    }
 }
 exports.pointNorth = pointNorth;
-function pointEast(x, dE) {
-    return new PointWGS84(x.lat, radToDeg(x.lonInRad + dE / (x.R2 * Math.cos(x.latInRad))), x.height);
+function pointEast(origin, dE) {
+    const lat = origin.coordinates[1];
+    const lon = radToDeg(degToRad(origin.coordinates[0]) + dE / (R2(origin) * Math.cos(degToRad(lat))));
+    if (origin.coordinates[2]) {
+        const h = origin.coordinates[2];
+        return { coordinates: [lon, lat, h], type: 'Point' };
+    }
+    else {
+        return { coordinates: [lon, lat], type: 'Point' };
+    }
 }
 exports.pointEast = pointEast;
-function pointUp(x, dH) {
-    return new PointWGS84(x.lat, x.lon, x.height + dH);
+function pointUp(origin, dH) {
+    return {
+        coordinates: [origin.coordinates[0], origin.coordinates[1], origin.coordinates[2] + dH],
+        type: 'Point'
+    };
 }
 exports.pointUp = pointUp;
 function degToRad(deg) {

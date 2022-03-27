@@ -19,9 +19,10 @@ Include in your project as any other NPM package
 
 ```typescript
 import {
+    bearing,
+    distance,
     distanceE,
     distanceN,
-    distanceTotal,
     GeoJson,
     pointEast,
     pointNorth,
@@ -40,6 +41,8 @@ const newLon = p1.lon;
 // Same thing in GeoJSON
 const p: PointWGS84 = PointWGS84.fromGeoJson({ coordinates: [25, 15], type: 'Point' });
 const p1: GeoJson = pointEast(pointNorth(p, 100), 200).geoJson;
+
+assert(distanceN(p, p1) === 100);
 ```
 
 ## Documention
