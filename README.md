@@ -7,7 +7,7 @@ A tiny library fully implemented in Typescript to handle WGS84 coordinates and "
 -   Parses and gives output in GeoJSON using the [Point definition](https://en.wikipedia.org/wiki/GeoJSON).
 -   No dependencies to other NPM modules.
 -   The math is based on [Aviation Formulary V1.47 by Ed Williams](https://edwilliams.org/avform147.htm#flat).
--   Functions will throw if fed impossible values, e.g. incorrectly formatted GeoJSON or lat >= 90 degrees (math will not work). Make sure to handle that!
+-   Functions will throw `Error` if fed impossible values, e.g. incorrectly formatted GeoJSON or lat >= 90 degrees (math will not work). Make sure to handle that!
 
 ## Getting Started
 
@@ -36,18 +36,19 @@ const lat = 15;
 const lon = 25;
 const p: Point = point(lat, lon);
 
-// Getting a new point 100m  north and 200m east of the first point
+// Getting a new point 100m north and 200m east of the first point
 const p1: Point = pointEast(pointNorth(p, 100), 200);
-const newLat = p1.coordinates[1];
+const newLat = p1.coordinates[1]; // GeoJSON uses [lon, lat] order!
 const newLon = p1.coordinates[0];
 
 // get the distance along north between the 2 points
-assert(distanceN(p, p1) === 100);
+assert(distanceNorth(p, p1) === 100);
+assert(distanceNorth(p1, p) === -100);
 ```
 
 ## Documention
 
-[Typedoc](docs\index.html)
+[Typedoc](docs\)
 
 # Build and Test
 
