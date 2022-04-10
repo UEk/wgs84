@@ -11,7 +11,7 @@ export interface Point {
  * creates a GeoJSON Point
  * will throw for impossible input
  * @param lat in degrees, has to be -90 < lat < 90
- * @param lon in degrees, has to be -180 <= lon < 180
+ * @param lon in degrees, has to be -180 <= lon <= 180
  * @param height in meters
  * @returns GeoJSON Point
  */

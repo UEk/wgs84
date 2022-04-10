@@ -45,7 +45,7 @@ meters
 
 #### Defined in
 
-[index.ts:41](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L41)
+[index.ts:41](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L41)
 
 ___
 
@@ -70,7 +70,7 @@ meters
 
 #### Defined in
 
-[index.ts:53](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L53)
+[index.ts:53](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L53)
 
 ___
 
@@ -97,7 +97,7 @@ degrees
 
 #### Defined in
 
-[index.ts:134](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L134)
+[index.ts:134](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L134)
 
 ___
 
@@ -124,7 +124,7 @@ meters
 
 #### Defined in
 
-[index.ts:112](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L112)
+[index.ts:112](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L112)
 
 ___
 
@@ -150,7 +150,7 @@ meters
 
 #### Defined in
 
-[index.ts:81](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L81)
+[index.ts:81](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L81)
 
 ___
 
@@ -176,7 +176,7 @@ meters
 
 #### Defined in
 
-[index.ts:66](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L66)
+[index.ts:66](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L66)
 
 ___
 
@@ -201,7 +201,7 @@ meters
 
 #### Defined in
 
-[index.ts:96](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L96)
+[index.ts:96](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L96)
 
 ___
 
@@ -228,7 +228,7 @@ GeoJSON Point
 
 #### Defined in
 
-[index.ts:18](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L18)
+[index.ts:18](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L18)
 
 ___
 
@@ -252,7 +252,7 @@ will throw for impossible input
 
 #### Defined in
 
-[index.ts:170](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L170)
+[index.ts:170](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L170)
 
 ___
 
@@ -276,7 +276,7 @@ will throw for impossible input
 
 #### Defined in
 
-[index.ts:151](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L151)
+[index.ts:151](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L151)
 
 ___
 
@@ -300,4 +300,4 @@ will throw for impossible input
 
 #### Defined in
 
-[index.ts:191](https://github.com/UEk/wgs84/blob/b1aa4e9/src/index.ts#L191)
+[index.ts:191](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L191)

@@ -1,10 +1,12 @@
+// eslint-disable-next-line import/no-unresolved
+import { Point } from 'geojson';
+
 import {
     bearing,
     distance,
     distanceEast,
     distanceNorth,
     distanceUp,
-    Point,
     point,
     pointEast,
     pointNorth,
@@ -18,7 +20,7 @@ describe('My WGS84 GeoJson library', function toast() {
         test('only lat, lon', function toast() {
             const lat = 0;
             const lon = 20;
-            const p = point(lat, lon);
+            const p: Point = point(lat, lon);
             expect(p.coordinates[0]).toBeCloseTo(lon, 6);
             expect(p.coordinates[1]).toBeCloseTo(lat, 6);
         });
@@ -26,7 +28,7 @@ describe('My WGS84 GeoJson library', function toast() {
             const lat = 0;
             const lon = 20;
             const height = 33;
-            const p = point(lat, lon, height);
+            const p: Point = point(lat, lon, height);
             expect(p.coordinates[0]).toBeCloseTo(lon, 6);
             expect(p.coordinates[1]).toBeCloseTo(lat, 6);
             expect(p.coordinates[2]).toBeCloseTo(height, 6);
@@ -169,7 +171,6 @@ describe('My WGS84 GeoJson library', function toast() {
                 coordinates: [lon - 1 / (60 * 60), lat - 1 / (60 * 60), 90],
                 type: 'Point'
             };
-
             expect(distanceNorth(p, p3)).toBeCloseTo(-deltaN);
             expect(distanceEast(p, p3)).toBeCloseTo(-deltaE);
             expect(distance(p, p3)).toBeCloseTo(delta);
@@ -182,7 +183,6 @@ describe('My WGS84 GeoJson library', function toast() {
             // Work = ADB Safegate
             // const p2 = new PointWGS84(55.6, 13, 45);
             const p2: Point = { coordinates: [13, 55.6, 45], type: 'Point' };
-
             // Travel west to work
             expect(distanceEast(p1, p2) / 1000).toBeCloseTo(-38, 0);
             // Travel north to work
