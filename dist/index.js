@@ -1,15 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pointUp = exports.pointEast = exports.pointNorth = exports.bearing = exports.distance = exports.distanceUp = exports.distanceEast = exports.distanceNorth = exports.R2 = exports.R1 = exports.point = void 0;
+exports.pointAbove = exports.pointEastOf = exports.pointNorthOf = exports.bearing = exports.distance = exports.distanceUp = exports.distanceEast = exports.distanceNorth = exports.R2 = exports.R1 = exports.point = void 0;
 function point(lat, lon, height) {
-    if (-90 < lat && lat < 90 && -180 <= lon && lon <= 180) {
-        return height
-            ? { coordinates: [lon, lat, height], type: 'Point' }
-            : { coordinates: [lon, lat], type: 'Point' };
-    }
-    else {
-        throw new Error(`Lat=$(lat)) or lon=$(lon) out of range`);
-    }
+    const result = height
+        ? { coordinates: [lon, lat, height], type: 'Point' }
+        : { coordinates: [lon, lat], type: 'Point' };
+    validCoord(result);
+    return result;
 }
 exports.point = point;
 const R = 6378.137 * 1000;
@@ -41,7 +38,17 @@ function distanceEast(origin, target) {
     const xLat = degToRad(origin.coordinates[1]);
     const xLon = degToRad(origin.coordinates[0]);
     const yLon = degToRad(target.coordinates[0]);
-    return R2(origin) * Math.cos(xLat) * (yLon - xLon);
+    let deltaAngle;
+    if (yLon - xLon > Math.PI) {
+        deltaAngle = yLon - xLon - 2 * Math.PI;
+    }
+    else if (yLon - xLon < -Math.PI) {
+        deltaAngle = yLon - xLon + 2 * Math.PI;
+    }
+    else {
+        deltaAngle = yLon - xLon;
+    }
+    return R2(origin) * Math.cos(xLat) * deltaAngle;
 }
 exports.distanceEast = distanceEast;
 function distanceUp(origin, target) {
@@ -74,23 +81,32 @@ function bearing(origin, target) {
         360);
 }
 exports.bearing = bearing;
-function pointNorth(origin, dN) {
+function pointNorthOf(origin, dN) {
     validCoord(origin);
-    const lat = radToDeg(degToRad(origin.coordinates[1]) + dN / R1(origin));
     const lon = origin.coordinates[0];
+    const lat = radToDeg(degToRad(origin.coordinates[1]) + dN / R1(origin));
+    let result;
     if (origin.coordinates[2]) {
         const h = origin.coordinates[2];
-        return { coordinates: [lon, lat, h], type: 'Point' };
+        result = { coordinates: [lon, lat, h], type: 'Point' };
     }
     else {
-        return { coordinates: [lon, lat], type: 'Point' };
+        result = { coordinates: [lon, lat], type: 'Point' };
     }
+    validCoord(result);
+    return result;
 }
-exports.pointNorth = pointNorth;
-function pointEast(origin, dE) {
+exports.pointNorthOf = pointNorthOf;
+function pointEastOf(origin, dE) {
     validCoord(origin);
     const lat = origin.coordinates[1];
-    const lon = radToDeg(degToRad(origin.coordinates[0]) + dE / (R2(origin) * Math.cos(degToRad(lat))));
+    let lon = radToDeg(degToRad(origin.coordinates[0]) + dE / (R2(origin) * Math.cos(degToRad(lat))));
+    if (lon > 180) {
+        lon -= 360;
+    }
+    else if (lon < -180) {
+        lon += 360;
+    }
     if (origin.coordinates[2]) {
         const h = origin.coordinates[2];
         return { coordinates: [lon, lat, h], type: 'Point' };
@@ -99,14 +115,15 @@ function pointEast(origin, dE) {
         return { coordinates: [lon, lat], type: 'Point' };
     }
 }
-exports.pointEast = pointEast;
-function pointUp(origin, dH) {
+exports.pointEastOf = pointEastOf;
+function pointAbove(origin, dH) {
+    validCoord(origin);
     return {
         coordinates: [origin.coordinates[0], origin.coordinates[1], origin.coordinates[2] + dH],
         type: 'Point'
     };
 }
-exports.pointUp = pointUp;
+exports.pointAbove = pointAbove;
 function degToRad(deg) {
     return (deg * Math.PI) / 180;
 }

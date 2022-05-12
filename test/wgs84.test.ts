@@ -8,9 +8,9 @@ import {
     distanceNorth,
     distanceUp,
     point,
-    pointEast,
-    pointNorth,
-    pointUp,
+    pointAbove,
+    pointEastOf,
+    pointNorthOf,
     R1,
     R2
 } from '../src/';
@@ -65,7 +65,6 @@ describe('My WGS84 GeoJson library', function toast() {
             expect(distance(p, p2)).toBeCloseTo(delta);
             expect(bearing(p, p2)).toBeCloseTo(135, 0);
         });
-
         test('3rd quadrant, East and north negative', function toast() {
             // const p3 = new PointWGS84(lat - 1 / 60, lon - 1 / 60);
             const p3: Point = { coordinates: [lon - 1 / 60, lat - 1 / 60], type: 'Point' };
@@ -86,6 +85,15 @@ describe('My WGS84 GeoJson library', function toast() {
             const p5: Point = { coordinates: [20, 0, 55], type: 'Point' };
             expect(distanceUp(p, p5)).toBeCloseTo(22);
             expect(distance(p, p5)).toBeCloseTo(22);
+        });
+        test('at 180 deg longitude', function toast() {
+            const p6: Point = { coordinates: [180 - 0.5 / 60, lat], type: 'Point' };
+            const p7: Point = { coordinates: [-180 + 0.5 / 60, lat + 1 / 60], type: 'Point' };
+            expect(distanceNorth(p6, p7)).toBeCloseTo(deltaN);
+            expect(distanceEast(p6, p7)).toBeCloseTo(deltaE, 1); // No cm precision...
+            expect(distance(p6, p7)).toBeCloseTo(delta);
+            expect(bearing(p6, p7)).toBeCloseTo(45, 0);
+            expect(distanceEast(p7, p6)).toBeCloseTo(-deltaE, 1); // No cm precision...
         });
     });
 
@@ -116,7 +124,6 @@ describe('My WGS84 GeoJson library', function toast() {
             expect(distanceEast(p, p2)).toBeCloseTo(deltaE, 1); // No cm precision...
             expect(distance(p, p2)).toBeCloseTo(delta);
         });
-
         test('3rd quadrant, East and north negative', function toast() {
             // const p3 = new PointWGS84(lat - 1 / 60, lon - 1 / 60);
             const p3: Point = { coordinates: [lon - 1 / 60, lat - 1 / 60], type: 'Point' };
@@ -202,7 +209,7 @@ describe('My WGS84 GeoJson library', function toast() {
             const p: Point = { coordinates: [lon, lat], type: 'Point' };
             const deltaN = 100;
             const deltaE = 200;
-            const p1: Point = pointEast(pointNorth(p, deltaN), deltaE);
+            const p1: Point = pointEastOf(pointNorthOf(p, deltaN), deltaE);
             expect(p1).toBeDefined();
             expect(p1.coordinates[1]).toBeCloseTo(lat + 0.1 / 110.649, 6);
             expect(p1.coordinates[0]).toBeCloseTo(lon + 0.2 / 107.55, 6);
@@ -221,7 +228,7 @@ describe('My WGS84 GeoJson library', function toast() {
             const deltaN = 100;
             const deltaE = 200;
             const deltaH = 80;
-            const p1: Point = pointUp(pointEast(pointNorth(p, deltaN), deltaE), deltaH);
+            const p1: Point = pointAbove(pointEastOf(pointNorthOf(p, deltaN), deltaE), deltaH);
             expect(p1).toBeDefined();
             expect(p1.coordinates[1]).toBeCloseTo(lat + 0.1 / 110.649, 6);
             expect(p1.coordinates[0]).toBeCloseTo(lon + 0.2 / 107.55, 6);
@@ -234,7 +241,7 @@ describe('My WGS84 GeoJson library', function toast() {
             // const p = new PointWGS84(lat, lon, height);
             const p: Point = { coordinates: [lon, lat, height], type: 'Point' };
             const deltaH = 100;
-            const p1: Point = pointUp(p, deltaH);
+            const p1: Point = pointAbove(p, deltaH);
             expect(p1).toBeDefined();
             expect(p1.coordinates[1]).toBeCloseTo(lat, 6);
             expect(p1.coordinates[0]).toBeCloseTo(lon, 6);
@@ -254,11 +261,47 @@ describe('My WGS84 GeoJson library', function toast() {
             const deltaN = 100;
             const deltaE = 200;
             const deltaH = 80;
-            const p2: Point = pointNorth(pointEast(pointUp(p, deltaH), deltaE), deltaN);
-            const p3: Point = pointUp(pointEast(pointNorth(p, deltaN), deltaE), deltaH);
+            const p2: Point = pointNorthOf(pointEastOf(pointAbove(p, deltaH), deltaE), deltaN);
+            const p3: Point = pointAbove(pointEastOf(pointNorthOf(p, deltaN), deltaE), deltaH);
             expect(p2.coordinates[0]).toBeCloseTo(p3.coordinates[0], 7);
             expect(p2.coordinates[1]).toBeCloseTo(p3.coordinates[1], 7);
             expect(p2.coordinates[2]).toBeCloseTo(p3.coordinates[2], 7);
+        });
+        test('to the east of an existing position at 180 degrees', function toast() {
+            // distance of 1 second (1/60 of a degree) at N30
+            // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+            // 15°	110.649 km	107.550 km
+            // so 100 m east is equal to 1/(107.55) deg
+            // origin
+            const deltaDeg = 1 / (107.55 * 10);
+            const lat = 15;
+            const lon = 180;
+            // const p = new PointWGS84(lat, lon);
+            const p: Point = { coordinates: [lon - deltaDeg, lat], type: 'Point' };
+            const deltaN = 100;
+            const deltaE = 200;
+            const p1: Point = pointEastOf(pointNorthOf(p, deltaN), deltaE);
+            expect(p1).toBeDefined();
+            expect(p1.coordinates[1]).toBeCloseTo(lat + 0.1 / 110.649, 6);
+            expect(p1.coordinates[0]).toBeCloseTo(-lon + 0.1 / 107.55, 6);
+        });
+        test('to the west of an existing position at -180 degrees', function toast() {
+            // distance of 1 second (1/60 of a degree) at N30
+            // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+            // 15°	110.649 km	107.550 km
+            // so 100 m east is equal to 1/(107.55) deg
+            // origin
+            const deltaDeg = 1 / (107.55 * 10);
+            const lat = 15;
+            const lon = 180;
+            // const p = new PointWGS84(lat, lon);
+            const p: Point = { coordinates: [-lon + deltaDeg, lat], type: 'Point' };
+            const deltaN = 100;
+            const deltaE = -200;
+            const p1: Point = pointEastOf(pointNorthOf(p, deltaN), deltaE);
+            expect(p1).toBeDefined();
+            expect(p1.coordinates[1]).toBeCloseTo(lat + 0.1 / 110.649, 6);
+            expect(p1.coordinates[0]).toBeCloseTo(lon - 0.1 / 107.55, 6);
         });
     });
     describe('should throw if given incorrect inputs', function toast() {
@@ -294,6 +337,12 @@ describe('My WGS84 GeoJson library', function toast() {
             expect(() => {
                 point(22, 182, 20);
             }).toThrowError('out of range');
+        });
+        test('pointNorthOf should throw if new lat > 90', function toast() {
+            const p1: Point = { coordinates: [0, 89.99], type: 'Point' };
+            expect(() => {
+                pointNorthOf(p1, 2000);
+            }).toThrow();
         });
         test('R1 should throw if lat > 90 degrees', function toast() {
             const p1: Point = { coordinates: [15, 92], type: 'Point' };

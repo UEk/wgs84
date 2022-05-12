@@ -3,9 +3,11 @@ _*/
 coverage/
 example/
 log/
+docs/
 !node_modules/
 src/
 test/
+report/
 .*
 *.log
 *.json

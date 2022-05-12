@@ -18,9 +18,9 @@
 - [distanceNorth](modules.md#distancenorth)
 - [distanceUp](modules.md#distanceup)
 - [point](modules.md#point)
-- [pointEast](modules.md#pointeast)
-- [pointNorth](modules.md#pointnorth)
-- [pointUp](modules.md#pointup)
+- [pointAbove](modules.md#pointabove)
+- [pointEastOf](modules.md#pointeastof)
+- [pointNorthOf](modules.md#pointnorthof)
 
 ## Functions
 
@@ -45,7 +45,7 @@ meters
 
 #### Defined in
 
-[index.ts:41](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L41)
+[index.ts:39](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L39)
 
 ___
 
@@ -70,7 +70,7 @@ meters
 
 #### Defined in
 
-[index.ts:53](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L53)
+[index.ts:51](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L51)
 
 ___
 
@@ -97,7 +97,7 @@ degrees
 
 #### Defined in
 
-[index.ts:134](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L134)
+[index.ts:140](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L140)
 
 ___
 
@@ -124,7 +124,7 @@ meters
 
 #### Defined in
 
-[index.ts:112](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L112)
+[index.ts:118](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L118)
 
 ___
 
@@ -150,7 +150,7 @@ meters
 
 #### Defined in
 
-[index.ts:81](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L81)
+[index.ts:79](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L79)
 
 ___
 
@@ -176,7 +176,7 @@ meters
 
 #### Defined in
 
-[index.ts:66](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L66)
+[index.ts:64](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L64)
 
 ___
 
@@ -201,7 +201,7 @@ meters
 
 #### Defined in
 
-[index.ts:96](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L96)
+[index.ts:102](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L102)
 
 ___
 
@@ -217,7 +217,7 @@ will throw for impossible input
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `lat` | `number` | in degrees, has to be -90 < lat < 90 |
-| `lon` | `number` | in degrees, has to be -180 <= lon < 180 |
+| `lon` | `number` | in degrees, has to be -180 <= lon <= 180 |
 | `height?` | `number` | in meters |
 
 #### Returns
@@ -228,13 +228,37 @@ GeoJSON Point
 
 #### Defined in
 
-[index.ts:18](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L18)
+[index.ts:18](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L18)
 
 ___
 
-### pointEast
+### pointAbove
 
-▸ **pointEast**(`origin`, `dE`): [`Point`](interfaces/Point.md)
+▸ **pointAbove**(`origin`, `dH`): [`Point`](interfaces/Point.md)
+
+Gives a new point at a height dH above the current point
+will throw for impossible input
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `origin` | [`Point`](interfaces/Point.md) | the origin point |
+| `dH` | `number` | the distance up in meters, negative number gives a lower height |
+
+#### Returns
+
+[`Point`](interfaces/Point.md)
+
+#### Defined in
+
+[index.ts:205](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L205)
+
+___
+
+### pointEastOf
+
+▸ **pointEastOf**(`origin`, `dE`): [`Point`](interfaces/Point.md)
 
 Gives a new point at a distance dE east of the current point
 will throw for impossible input
@@ -252,13 +276,13 @@ will throw for impossible input
 
 #### Defined in
 
-[index.ts:170](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L170)
+[index.ts:179](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L179)
 
 ___
 
-### pointNorth
+### pointNorthOf
 
-▸ **pointNorth**(`origin`, `dN`): [`Point`](interfaces/Point.md)
+▸ **pointNorthOf**(`origin`, `dN`): [`Point`](interfaces/Point.md)
 
 Gives a new point at a distance dN north of the current point
 will throw for impossible input
@@ -276,28 +300,4 @@ will throw for impossible input
 
 #### Defined in
 
-[index.ts:151](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L151)
-
-___
-
-### pointUp
-
-▸ **pointUp**(`origin`, `dH`): [`Point`](interfaces/Point.md)
-
-Gives a new point at a distance dE east of the current point
-will throw for impossible input
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the origin point |
-| `dH` | `number` | the distance up in meters, negative number gives a lower height |
-
-#### Returns
-
-[`Point`](interfaces/Point.md)
-
-#### Defined in
-
-[index.ts:191](https://github.com/UEk/wgs84/blob/4eb2512/src/index.ts#L191)
+[index.ts:157](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L157)

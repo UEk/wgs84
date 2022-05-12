@@ -4,12 +4,12 @@
 
 ## Introduction
 
-A tiny library fully implemented in Typescript to handle WGS84 coordinates and "small" distances in meters between them, based on a local, flat earth approximation.
+A tiny library fully implemented in Typescript to handle WGS84 coordinates in geojson and "small" distances between them with very high accuracy (~1 cm), based on a local, flat earth approximation.
 
--   Parses and gives output in GeoJSON using the [Point definition](https://en.wikipedia.org/wiki/GeoJSON).
+-   Parses and gives output in GeoJSON using the [Point definition](https://en.wikipedia.org/wiki/GeoJSON). If you already have imported the typescript definition for Point in the geojson package you can use that (that is what I do in unit testing). Otherwise you can import `Point` from this package.
 -   No dependencies to other NPM modules.
 -   The math is based on [Aviation Formulary V1.47 by Ed Williams](https://edwilliams.org/avform147.htm#flat).
--   Functions will throw `Error` if fed impossible values, e.g. incorrectly formatted GeoJSON or lat >= 90 degrees (math will not work). Make sure to handle that!
+-   Functions will throw `Error` if fed impossible values, e.g. incorrectly formatted GeoJSON or lat >= 90 degrees (math will not work!). Make sure to handle that!
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ const lon = 25;
 const p: Point = point(lat, lon);
 
 // Getting a new point 100m north and 200m east of the first point
-const p1: Point = pointEast(pointNorth(p, 100), 200);
+const p1: Point = pointEastOf(pointNorth(p, 100), 200);
 const newLat = p1.coordinates[1]; // GeoJSON uses [lon, lat] order!
 const newLon = p1.coordinates[0];
 
