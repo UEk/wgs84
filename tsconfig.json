@@ -18,6 +18,6 @@
         "noImplicitReturns": true,
         "types": ["node", "jest"]
     },
-    "exclude": ["./dist/", "./coverage/", "./report/", "unused_src"],
+    "exclude": ["./dist/", "./coverage/", "./report/"],
     "include": ["./src/**/*"]
 }
