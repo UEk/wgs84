@@ -3,7 +3,7 @@
 .vscode/
 node_modules/
 dist/
-docs/
+doc/
 # files
 .eslintrc
 .prettierrc

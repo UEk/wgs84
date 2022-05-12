@@ -1,9 +1,9 @@
 _*/
 .*/
 coverage/
+doc/
 example/
 log/
-docs/
 !node_modules/
 src/
 test/
@@ -13,3 +13,5 @@ report/
 *.json
 *.js
 *.properties
+*.tgz
+

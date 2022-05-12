@@ -4,7 +4,7 @@ dist/
 coverage/
 node_modules/
 old-src/
-docs/
+doc/
 example/
 # files
 tsconfig.json

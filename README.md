@@ -48,7 +48,7 @@ assert(distanceNorth(p1, p) === -100);
 
 ## Documention
 
-[Typedoc](docs\)
+[Typedoc](doc\)
 
 # Build and Test
 

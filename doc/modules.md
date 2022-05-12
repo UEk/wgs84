@@ -1,6 +1,6 @@
-[@UEk/wgs84](README.md) / Exports
+[@ulrik.ek/wgs84](README.md) / Exports
 
-# @UEk/wgs84
+# @ulrik.ek/wgs84
 
 ## Table of contents
 
@@ -35,7 +35,7 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `position` | [`Point`](interfaces/Point.md) | The current position |
+| `position` | [`Point`](interfaces/Point.md) | The current position in GeoJson |
 
 #### Returns
 
@@ -45,7 +45,7 @@ meters
 
 #### Defined in
 
-[index.ts:39](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L39)
+[index.ts:39](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L39)
 
 ___
 
@@ -60,7 +60,7 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `position` | [`Point`](interfaces/Point.md) | The current position |
+| `position` | [`Point`](interfaces/Point.md) | The current position in GeoJson |
 
 #### Returns
 
@@ -70,7 +70,7 @@ meters
 
 #### Defined in
 
-[index.ts:51](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L51)
+[index.ts:51](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L51)
 
 ___
 
@@ -86,8 +86,8 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the origin point |
-| `target` | [`Point`](interfaces/Point.md) | the target point |
+| `origin` | [`Point`](interfaces/Point.md) | the origin point in GeoJson |
+| `target` | [`Point`](interfaces/Point.md) | the target point in GeoJson |
 
 #### Returns
 
@@ -97,7 +97,7 @@ degrees
 
 #### Defined in
 
-[index.ts:140](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L140)
+[index.ts:140](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L140)
 
 ___
 
@@ -113,8 +113,8 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the origin point |
-| `target` | [`Point`](interfaces/Point.md) | the resulting point |
+| `origin` | [`Point`](interfaces/Point.md) | the origin point in GeoJson |
+| `target` | [`Point`](interfaces/Point.md) | the resulting point in GeoJson |
 
 #### Returns
 
@@ -124,7 +124,7 @@ meters
 
 #### Defined in
 
-[index.ts:118](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L118)
+[index.ts:118](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L118)
 
 ___
 
@@ -139,8 +139,8 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the starting point |
-| `target` | [`Point`](interfaces/Point.md) | the ending point |
+| `origin` | [`Point`](interfaces/Point.md) | the starting point in GeoJson |
+| `target` | [`Point`](interfaces/Point.md) | the ending point in GeoJson |
 
 #### Returns
 
@@ -150,7 +150,7 @@ meters
 
 #### Defined in
 
-[index.ts:79](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L79)
+[index.ts:79](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L79)
 
 ___
 
@@ -165,8 +165,8 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the starting point |
-| `target` | [`Point`](interfaces/Point.md) | the ending point |
+| `origin` | [`Point`](interfaces/Point.md) | the starting point in GeoJson |
+| `target` | [`Point`](interfaces/Point.md) | the ending point in GeoJson |
 
 #### Returns
 
@@ -176,7 +176,7 @@ meters
 
 #### Defined in
 
-[index.ts:64](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L64)
+[index.ts:64](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L64)
 
 ___
 
@@ -190,8 +190,8 @@ Calculates the vertical distance in meters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the starting point |
-| `target` | [`Point`](interfaces/Point.md) | the ending point |
+| `origin` | [`Point`](interfaces/Point.md) | the starting point in GeoJson |
+| `target` | [`Point`](interfaces/Point.md) | the ending point in GeoJson |
 
 #### Returns
 
@@ -201,7 +201,7 @@ meters
 
 #### Defined in
 
-[index.ts:102](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L102)
+[index.ts:102](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L102)
 
 ___
 
@@ -228,7 +228,7 @@ GeoJSON Point
 
 #### Defined in
 
-[index.ts:18](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L18)
+[index.ts:18](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L18)
 
 ___
 
@@ -243,16 +243,18 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the origin point |
+| `origin` | [`Point`](interfaces/Point.md) | the origin point in GeoJson |
 | `dH` | `number` | the distance up in meters, negative number gives a lower height |
 
 #### Returns
 
 [`Point`](interfaces/Point.md)
 
+GeoJson Point
+
 #### Defined in
 
-[index.ts:205](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L205)
+[index.ts:205](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L205)
 
 ___
 
@@ -267,16 +269,18 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the origin point |
-| `dE` | `number` | the distance along an eastern meridian, negative number gives distance to west |
+| `origin` | [`Point`](interfaces/Point.md) | the origin point in GeoJson |
+| `dE` | `number` | the distance in meters along an eastern meridian, negative number gives distance to west |
 
 #### Returns
 
 [`Point`](interfaces/Point.md)
 
+GeoJson Point
+
 #### Defined in
 
-[index.ts:179](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L179)
+[index.ts:179](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L179)
 
 ___
 
@@ -291,13 +295,15 @@ will throw for impossible input
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `origin` | [`Point`](interfaces/Point.md) | the origin point |
-| `dN` | `number` | the distance along a northern meridian, negative number gives distance to south |
+| `origin` | [`Point`](interfaces/Point.md) | the origin point in GeoJson |
+| `dN` | `number` | the distance in meters along a northern meridian, negative number gives distance to south |
 
 #### Returns
 
 [`Point`](interfaces/Point.md)
 
+GeoJson Point
+
 #### Defined in
 
-[index.ts:157](https://github.com/UEk/wgs84/blob/3542cf7/src/index.ts#L157)
+[index.ts:157](https://github.com/UEk/wgs84/blob/c1eed2d/src/index.ts#L157)
