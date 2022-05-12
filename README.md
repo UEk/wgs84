@@ -40,7 +40,7 @@ This will produce the following output
 
 > lat=15.000903761214213, lon=25.001859599546577  
 > distance along north=99.99999999991357  
-> distance along east=200.00084005143466  
+> distance along east=200.00084005143466
 
 ## Documention
 
