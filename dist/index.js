@@ -27,28 +27,25 @@ exports.R2 = R2;
 function distanceNorth(origin, target) {
     validCoord(origin);
     validCoord(target);
-    const xLat = degToRad(origin.coordinates[1]);
-    const yLat = degToRad(target.coordinates[1]);
-    return R1(origin) * (yLat - xLat);
+    const originLat = degToRad(origin.coordinates[1]);
+    const targetLat = degToRad(target.coordinates[1]);
+    return R1(origin) * (targetLat - originLat);
 }
 exports.distanceNorth = distanceNorth;
 function distanceEast(origin, target) {
     validCoord(origin);
     validCoord(target);
-    const xLat = degToRad(origin.coordinates[1]);
-    const xLon = degToRad(origin.coordinates[0]);
-    const yLon = degToRad(target.coordinates[0]);
-    let deltaAngle;
-    if (yLon - xLon > Math.PI) {
-        deltaAngle = yLon - xLon - 2 * Math.PI;
+    const originLat = degToRad(origin.coordinates[1]);
+    const originLon = degToRad(origin.coordinates[0]);
+    const targetLon = degToRad(target.coordinates[0]);
+    let deltaAngle = targetLon - originLon;
+    if (deltaAngle > Math.PI) {
+        deltaAngle -= 2 * Math.PI;
     }
-    else if (yLon - xLon < -Math.PI) {
-        deltaAngle = yLon - xLon + 2 * Math.PI;
+    else if (targetLon - originLon < -Math.PI) {
+        deltaAngle += 2 * Math.PI;
     }
-    else {
-        deltaAngle = yLon - xLon;
-    }
-    return R2(origin) * Math.cos(xLat) * deltaAngle;
+    return R2(origin) * Math.cos(originLat) * deltaAngle;
 }
 exports.distanceEast = distanceEast;
 function distanceUp(origin, target) {
@@ -131,14 +128,15 @@ function radToDeg(rad) {
     return (rad * 180) / Math.PI;
 }
 function validCoord(p) {
-    if (-90 <= p.coordinates[1] &&
+    if ((p.coordinates.length === 2 || p.coordinates.length === 3) &&
+        -90 <= p.coordinates[1] &&
         p.coordinates[1] < 90 &&
         -180 <= p.coordinates[0] &&
         p.coordinates[0] <= 180) {
         return true;
     }
     else {
-        throw new Error(`Lat=$(lat)) or lon=$(lon) out of range`);
+        throw new Error(`Invalid GeoJson or lat/lon out of range`);
     }
 }
 //# sourceMappingURL=index.js.map

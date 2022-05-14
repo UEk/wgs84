@@ -6,6 +6,7 @@
 
 A tiny library fully implemented in Typescript to handle WGS84 coordinates in GeoJson and "small" distances between them with very high accuracy (~1 cm), based on a local, flat earth approximation.
 
+-   All functions uses degrees for latitude and longitude, and meters for distances.
 -   Parses and gives output in GeoJson using the [Point definition](https://en.wikipedia.org/wiki/GeoJSON). If you already have imported the typescript definition for Point in the geojson package you can use that (that is what I do in unit testing). Otherwise you can import `Point` from this package.
 -   No dependencies to other NPM modules.
 -   The math is based on [Aviation Formulary V1.47 by Ed Williams](https://edwilliams.org/avform147.htm#flat).
@@ -20,7 +21,7 @@ Include in your project as any other NPM package
 ## Usage
 
 ```typescript
-import * as wgs84 from '@ulrik.ek/wgs84';
+import * as wgs84 from '@ulrik.ek/wgs84'; // The functions can obviously also be imported separately
 
 // helper function to construct a GeoJSON Point
 const lat = 15;
@@ -46,7 +47,23 @@ This will produce the following output
 
 ## Documention
 
-[Typedoc](https://github.com/UEk/wgs84/blob/main/doc/modules.md)
+The following functions are available:
+
+```Typescript
+point(lat: number, lon: number, height?: number): Point;
+R1(position: Point): number;
+R2(position: Point): number;
+distanceNorth(origin: Point, target: Point): number;
+distanceEast(origin: Point, target: Point): number;
+distanceUp(origin: Point, target: Point): number;
+distance(origin: Point, target: Point): number;
+bearing(origin: Point, target: Point): number;
+pointNorthOf(origin: Point, dN: number): Point;
+pointEastOf(origin: Point, dE: number): Point;
+pointAbove(origin: Point, dH: number): Point;
+```
+
+[Full Typedoc documentation](https://github.com/UEk/wgs84/blob/main/doc/modules.md)
 
 # Build and Test
 

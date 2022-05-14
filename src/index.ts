@@ -64,9 +64,9 @@ export function R2(position: Point): number {
 export function distanceNorth(origin: Point, target: Point): number {
     validCoord(origin);
     validCoord(target);
-    const xLat = degToRad(origin.coordinates[1]);
-    const yLat = degToRad(target.coordinates[1]);
-    return R1(origin) * (yLat - xLat);
+    const originLat = degToRad(origin.coordinates[1]);
+    const targetLat = degToRad(target.coordinates[1]);
+    return R1(origin) * (targetLat - originLat);
 }
 
 /**
@@ -79,18 +79,16 @@ export function distanceNorth(origin: Point, target: Point): number {
 export function distanceEast(origin: Point, target: Point): number {
     validCoord(origin);
     validCoord(target);
-    const xLat = degToRad(origin.coordinates[1]);
-    const xLon = degToRad(origin.coordinates[0]);
-    const yLon = degToRad(target.coordinates[0]);
-    let deltaAngle: number;
-    if (yLon - xLon > Math.PI) {
-        deltaAngle = yLon - xLon - 2 * Math.PI;
-    } else if (yLon - xLon < -Math.PI) {
-        deltaAngle = yLon - xLon + 2 * Math.PI;
-    } else {
-        deltaAngle = yLon - xLon;
+    const originLat = degToRad(origin.coordinates[1]);
+    const originLon = degToRad(origin.coordinates[0]);
+    const targetLon = degToRad(target.coordinates[0]);
+    let deltaAngle: number = targetLon - originLon;
+    if (deltaAngle > Math.PI) {
+        deltaAngle -= 2 * Math.PI;
+    } else if (targetLon - originLon < -Math.PI) {
+        deltaAngle += 2 * Math.PI;
     }
-    return R2(origin) * Math.cos(xLat) * deltaAngle;
+    return R2(origin) * Math.cos(originLat) * deltaAngle;
 }
 
 /**
@@ -220,6 +218,7 @@ function radToDeg(rad: number): number {
 
 function validCoord(p: Point): boolean {
     if (
+        (p.coordinates.length === 2 || p.coordinates.length === 3) &&
         -90 <= p.coordinates[1] &&
         p.coordinates[1] < 90 &&
         -180 <= p.coordinates[0] &&
@@ -227,6 +226,6 @@ function validCoord(p: Point): boolean {
     ) {
         return true;
     } else {
-        throw new Error(`Lat=$(lat)) or lon=$(lon) out of range`);
+        throw new Error(`Invalid GeoJson or lat/lon out of range`);
     }
 }
