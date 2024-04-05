@@ -115,12 +115,12 @@ export function distanceUp(origin: Point, target: Point): number {
  */
 export function distance(origin: Point, target: Point): number {
     if (origin.coordinates.length === 2 || target.coordinates.length === 2) {
-        return Math.sqrt(distanceNorth(origin, target) ** 2 + distanceEast(origin, target) ** 2);
+        return Math.hypot(distanceNorth(origin, target), distanceEast(origin, target));
     } else if (origin.coordinates.length === 3 && target.coordinates.length === 3) {
-        return Math.sqrt(
-            distanceNorth(origin, target) ** 2 +
-                distanceEast(origin, target) ** 2 +
-                distanceUp(origin, target) ** 2
+        return Math.hypot(
+            distanceNorth(origin, target),
+            distanceEast(origin, target),
+            distanceUp(origin, target)
         );
     } else {
         throw new Error('Inputs are not GeoJSON Points.');

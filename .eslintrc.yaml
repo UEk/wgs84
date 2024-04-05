@@ -164,12 +164,6 @@ rules:
   "@typescript-eslint/consistent-type-assertions":
     - error
     - assertionStyle: as
-  "@typescript-eslint/no-parameter-properties":
-    - error
-    - allows:
-        - private readonly
-        - protected readonly
-        - public readonly
   # Disabled becouse of conflict with "sort-class-members/sort-class-members"
   "@typescript-eslint/member-ordering": off
   "@typescript-eslint/no-extra-non-null-assertion": error

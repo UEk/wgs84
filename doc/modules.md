@@ -45,7 +45,7 @@ meters
 
 #### Defined in
 
-[index.ts:39](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L39)
+[index.ts:39](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L39)
 
 ___
 
@@ -70,7 +70,7 @@ meters
 
 #### Defined in
 
-[index.ts:51](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L51)
+[index.ts:51](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L51)
 
 ___
 
@@ -97,7 +97,7 @@ degrees
 
 #### Defined in
 
-[index.ts:138](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L138)
+[index.ts:138](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L138)
 
 ___
 
@@ -124,7 +124,7 @@ meters
 
 #### Defined in
 
-[index.ts:116](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L116)
+[index.ts:116](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L116)
 
 ___
 
@@ -150,7 +150,7 @@ meters
 
 #### Defined in
 
-[index.ts:79](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L79)
+[index.ts:79](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L79)
 
 ___
 
@@ -176,7 +176,7 @@ meters
 
 #### Defined in
 
-[index.ts:64](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L64)
+[index.ts:64](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L64)
 
 ___
 
@@ -201,7 +201,7 @@ meters
 
 #### Defined in
 
-[index.ts:100](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L100)
+[index.ts:100](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L100)
 
 ___
 
@@ -228,7 +228,7 @@ GeoJSON Point
 
 #### Defined in
 
-[index.ts:18](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L18)
+[index.ts:18](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L18)
 
 ___
 
@@ -254,7 +254,7 @@ GeoJson Point
 
 #### Defined in
 
-[index.ts:203](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L203)
+[index.ts:203](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L203)
 
 ___
 
@@ -280,7 +280,7 @@ GeoJson Point
 
 #### Defined in
 
-[index.ts:177](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L177)
+[index.ts:177](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L177)
 
 ___
 
@@ -306,4 +306,4 @@ GeoJson Point
 
 #### Defined in
 
-[index.ts:155](https://github.com/UEk/wgs84/blob/f181b05/src/index.ts#L155)
+[index.ts:155](https://github.com/UEk/wgs84/blob/54177f4/src/index.ts#L155)
