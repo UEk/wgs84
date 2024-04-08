@@ -26,7 +26,7 @@ const lat = 15;
 const lon = 25;
 const p: wgs84.Point = wgs84.point(lat, lon);
 
-// Getting a new point 100m north and 200m east of the first point
+// Getting a new point 300m north and 400m east of the first point
 const p1: wgs84.Point = wgs84.pointEastOf(wgs84.pointNorthOf(p, 300), 400);
 const newLat = p1.coordinates[1]; // GeoJSON uses [lon, lat] order!
 const newLon = p1.coordinates[0];
@@ -45,7 +45,7 @@ This will produce the following output
 > Distance along east=400.00504064747975  
 > Total distance=500.0040325271862
 
-## Documention
+## Documentation
 
 The following functions are available:
 

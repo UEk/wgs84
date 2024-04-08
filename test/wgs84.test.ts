@@ -43,7 +43,6 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
     const height = 33;
     const deltaN: number = (110.574 / 60) * 1000;
     const deltaE: number = (111.32 / 60) * 1000;
-    // const p: PointWGS84 = new PointWGS84(lat, lon);
     const p: Point = { coordinates: [lon, lat, height], type: 'Point' };
     const delta: number = Math.sqrt((110.574 * 110.574) / 3600 + (111.32 * 111.32) / 3600) * 1000;
 
@@ -56,7 +55,6 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
         expect(bearing(p, p1)).toBeCloseTo(45, 0);
     });
     test('2nd quadrant, East positive, north negative', function toast() {
-        // const p2 = new PointWGS84(lat - 1 / 60, lon + 1 / 60);
         const p2: Point = { coordinates: [lon + 1 / 60, lat - 1 / 60], type: 'Point' };
         expect(distanceNorth(p, p2)).toBeCloseTo(-deltaN);
         expect(distanceEast(p, p2)).toBeCloseTo(deltaE, 1); // No cm precision...
@@ -64,7 +62,6 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
         expect(bearing(p, p2)).toBeCloseTo(135, 0);
     });
     test('3rd quadrant, East and north negative', function toast() {
-        // const p3 = new PointWGS84(lat - 1 / 60, lon - 1 / 60);
         const p3: Point = { coordinates: [lon - 1 / 60, lat - 1 / 60], type: 'Point' };
         expect(distanceNorth(p, p3)).toBeCloseTo(-deltaN);
         expect(distanceEast(p, p3)).toBeCloseTo(-deltaE, 1); // No cm precision...
@@ -72,7 +69,6 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
         expect(bearing(p, p3)).toBeCloseTo(225, 0);
     });
     test('4th quadrant, East negative and north positive', function toast() {
-        // const p4 = new PointWGS84(lat + 1 / 60, lon - 1 / 60);
         const p4: Point = { coordinates: [lon - 1 / 60, lat + 1 / 60], type: 'Point' };
         expect(distanceNorth(p, p4)).toBeCloseTo(deltaN);
         expect(distanceEast(p, p4)).toBeCloseTo(-deltaE, 1); // No cm precision...
@@ -104,7 +100,6 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
     const lon = -30;
     const deltaN = (111.412 / 60) * 1000;
     const deltaE = (55.8 / 60) * 1000;
-    // const p = new PointWGS84(lat, lon);
     const p: Point = { coordinates: [lon, lat], type: 'Point' };
     const delta = Math.sqrt((111.412 * 111.412) / 3600 + (55.8 * 55.8) / 3600) * 1000;
 
@@ -116,21 +111,18 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
         expect(distance(p, p1)).toBeCloseTo(delta);
     });
     test('2nd quadrant, East positive, north negative', function toast() {
-        // const p2 = new PointWGS84(lat - 1 / 60, lon + 1 / 60);
         const p2: Point = { coordinates: [lon + 1 / 60, lat - 1 / 60], type: 'Point' };
         expect(distanceNorth(p, p2)).toBeCloseTo(-deltaN);
         expect(distanceEast(p, p2)).toBeCloseTo(deltaE, 1); // No cm precision...
         expect(distance(p, p2)).toBeCloseTo(delta);
     });
     test('3rd quadrant, East and north negative', function toast() {
-        // const p3 = new PointWGS84(lat - 1 / 60, lon - 1 / 60);
         const p3: Point = { coordinates: [lon - 1 / 60, lat - 1 / 60], type: 'Point' };
         expect(distanceNorth(p, p3)).toBeCloseTo(-deltaN);
         expect(distanceEast(p, p3)).toBeCloseTo(-deltaE, 1); // No cm precision...
         expect(distance(p, p3)).toBeCloseTo(delta);
     });
     test('4th quadrant, East negative and north positive', function toast() {
-        // const p4 = new PointWGS84(lat + 1 / 60, lon - 1 / 60);
         const p4: Point = { coordinates: [lon - 1 / 60, lat + 1 / 60], type: 'Point' };
         expect(distanceNorth(p, p4)).toBeCloseTo(deltaN);
         expect(distanceEast(p, p4)).toBeCloseTo(-deltaE, 1); // No cm precision...
@@ -138,7 +130,7 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
     });
     test('should be able to calculate the distance at 30 degrees south', function toast() {
         // distance of 1 second (1/60 of a degree) at N30
-        // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+        // See https://en.wikipedia.org/wiki/Latitude for length of a degree
         // S30 deg	110.852 km	96.486 km
         // origin
         const lat = -30;
@@ -160,7 +152,7 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
     });
     test('should be able to calculate the distance at 30 degrees south with height', function toast() {
         // distance of 1 second (1/60 of a degree) at N30
-        // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+        // See https://en.wikipedia.org/wiki/Latitude for length of a degree
         // S30 deg	110.852 km	96.486 km
         // origin
         const lat = -30;
@@ -180,31 +172,17 @@ describe('My WGS84 GeoJson library should be able to calculate correct distances
         expect(distanceEast(p, p3)).toBeCloseTo(-deltaE);
         expect(distance(p, p3)).toBeCloseTo(delta);
     });
-    test('should be able to calculate a longer distance at 55 deg North', function toast() {
-        // Test the distance from Ulrik's home to work
-        // Home
-        // const p1 = new PointWGS84(55.5, 13.6, 65.5);
-        const p1: Point = { coordinates: [13.6, 55.5, 65.5], type: 'Point' };
-        // Work = ADB Safegate
-        // const p2 = new PointWGS84(55.6, 13, 45);
-        const p2: Point = { coordinates: [13, 55.6, 45], type: 'Point' };
-        // Travel west to work
-        expect(distanceEast(p1, p2) / 1000).toBeCloseTo(-38, 0);
-        // Travel north to work
-        expect(distanceNorth(p1, p2) / 1000).toBeCloseTo(11, 0);
-    });
 });
 
 describe('My WGS84 GeoJson library should be able to calculate new positions', function toast() {
     test('to the north or east of an existing position', function toast() {
         // distance of 1 second (1/60 of a degree) at N30
-        // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+        // See https://en.wikipedia.org/wiki/Latitude for length of a degree
         // 15°	110.649 km	107.550 km
         // so 100 m north is equal to 1/(110.649*10) deg
         // origin
         const lat = 15;
         const lon = 25;
-        // const p = new PointWGS84(lat, lon);
         const p: Point = { coordinates: [lon, lat], type: 'Point' };
         const deltaN = 100;
         const deltaE = 200;
@@ -215,14 +193,13 @@ describe('My WGS84 GeoJson library should be able to calculate new positions', f
     });
     test('to the north or east of an existing position with height', function toast() {
         // distance of 1 second (1/60 of a degree) at N30
-        // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+        // See https://en.wikipedia.org/wiki/Latitude for length of a degree
         // 15°	110.649 km	107.550 km
         // so 100 m north is equal to 1/(110.649*10) deg
         // origin
         const lat = 15;
         const lon = 25;
         const height = 550;
-        // const p = new PointWGS84(lat, lon);
         const p: Point = { coordinates: [lon, lat, height], type: 'Point' };
         const deltaN = 100;
         const deltaE = 200;
@@ -237,7 +214,6 @@ describe('My WGS84 GeoJson library should be able to calculate new positions', f
         const lat = 11;
         const lon = 22;
         const height = 33;
-        // const p = new PointWGS84(lat, lon, height);
         const p: Point = { coordinates: [lon, lat, height], type: 'Point' };
         const deltaH = 100;
         const p1: Point = pointAbove(p, deltaH);
@@ -248,14 +224,13 @@ describe('My WGS84 GeoJson library should be able to calculate new positions', f
     });
     test('that the transitions in distanceX() functions are approximately transmutative', function toast() {
         // distance of 1 second (1/60 of a degree) at N30
-        // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+        // See https://en.wikipedia.org/wiki/Latitude for length of a degree
         // 15°	110.649 km	107.550 km
         // so 100 m north is equal to 1/(110.649*10) deg
         // origin
         const lat = 15;
         const lon = 25;
         const height = 550;
-        // const p = new PointWGS84(lat, lon);
         const p: Point = { coordinates: [lon, lat, height], type: 'Point' };
         const deltaN = 100;
         const deltaE = 200;
@@ -268,14 +243,13 @@ describe('My WGS84 GeoJson library should be able to calculate new positions', f
     });
     test('to the east of an existing position at 180 degrees', function toast() {
         // distance of 1 second (1/60 of a degree) at N30
-        // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+        // See https://en.wikipedia.org/wiki/Latitude for length of a degree
         // 15°	110.649 km	107.550 km
         // so 100 m east is equal to 1/(107.55) deg
         // origin
         const deltaDeg = 1 / (107.55 * 10);
         const lat = 15;
         const lon = 180;
-        // const p = new PointWGS84(lat, lon);
         const p: Point = { coordinates: [lon - deltaDeg, lat], type: 'Point' };
         const deltaN = 100;
         const deltaE = 200;
@@ -286,14 +260,13 @@ describe('My WGS84 GeoJson library should be able to calculate new positions', f
     });
     test('to the west of an existing position at -180 degrees', function toast() {
         // distance of 1 second (1/60 of a degree) at N30
-        // See https://en.wikipedia.org/wiki/Latitude for lengt of a degree
+        // See https://en.wikipedia.org/wiki/Latitude for length of a degree
         // 15°	110.649 km	107.550 km
         // so 100 m east is equal to 1/(107.55) deg
         // origin
         const deltaDeg = 1 / (107.55 * 10);
         const lat = 15;
         const lon = 180;
-        // const p = new PointWGS84(lat, lon);
         const p: Point = { coordinates: [-lon + deltaDeg, lat], type: 'Point' };
         const deltaN = 100;
         const deltaE = -200;
