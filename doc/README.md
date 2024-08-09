@@ -1,4 +1,6 @@
-@ulrik.ek/wgs84 / [Exports](modules.md)
+**@ulrik.ek/wgs84** • [**Docs**](globals.md)
+
+***
 
 # wgs84
 

@@ -1,4 +1,8 @@
-[@ulrik.ek/wgs84](../README.md) / [Exports](../modules.md) / Point
+[**@ulrik.ek/wgs84**](../README.md) • **Docs**
+
+***
+
+[@ulrik.ek/wgs84](../globals.md) / Point
 
 # Interface: Point
 

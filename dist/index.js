@@ -1,6 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pointAbove = exports.pointEastOf = exports.pointNorthOf = exports.bearing = exports.distance = exports.distanceUp = exports.distanceEast = exports.distanceNorth = exports.R2 = exports.R1 = exports.point = void 0;
+exports.point = point;
+exports.R1 = R1;
+exports.R2 = R2;
+exports.distanceNorth = distanceNorth;
+exports.distanceEast = distanceEast;
+exports.distanceUp = distanceUp;
+exports.distance = distance;
+exports.bearing = bearing;
+exports.pointNorthOf = pointNorthOf;
+exports.pointEastOf = pointEastOf;
+exports.pointAbove = pointAbove;
 function point(lat, lon, height) {
     const result = height
         ? { coordinates: [lon, lat, height], type: 'Point' }
@@ -8,7 +18,6 @@ function point(lat, lon, height) {
     validCoord(result);
     return result;
 }
-exports.point = point;
 const R = 6378.137 * 1000;
 const f = 1 / 298.257_223_563;
 const eSquared = f * (2 - f);
@@ -17,13 +26,11 @@ function R1(position) {
     const lat = degToRad(position.coordinates[1]);
     return (R * (1 - eSquared)) / Math.pow(1 - eSquared * Math.pow(Math.sin(lat), 2), 3 / 2);
 }
-exports.R1 = R1;
 function R2(position) {
     validCoord(position);
     const lat = degToRad(position.coordinates[1]);
     return R / Math.sqrt(1 - eSquared * Math.pow(Math.sin(lat), 2));
 }
-exports.R2 = R2;
 function distanceNorth(origin, target) {
     validCoord(origin);
     validCoord(target);
@@ -31,7 +38,6 @@ function distanceNorth(origin, target) {
     const targetLat = degToRad(target.coordinates[1]);
     return R1(origin) * (targetLat - originLat);
 }
-exports.distanceNorth = distanceNorth;
 function distanceEast(origin, target) {
     validCoord(origin);
     validCoord(target);
@@ -47,7 +53,6 @@ function distanceEast(origin, target) {
     }
     return R2(origin) * Math.cos(originLat) * deltaAngle;
 }
-exports.distanceEast = distanceEast;
 function distanceUp(origin, target) {
     if (origin.coordinates.length === 3 && target.coordinates.length === 3) {
         return target.coordinates[2] - origin.coordinates[2];
@@ -56,7 +61,6 @@ function distanceUp(origin, target) {
         throw new Error('Input is not GeoJSON Point with height.');
     }
 }
-exports.distanceUp = distanceUp;
 function distance(origin, target) {
     if (origin.coordinates.length === 2 || target.coordinates.length === 2) {
         return Math.hypot(distanceNorth(origin, target), distanceEast(origin, target));
@@ -68,14 +72,12 @@ function distance(origin, target) {
         throw new Error('Inputs are not GeoJSON Points.');
     }
 }
-exports.distance = distance;
 function bearing(origin, target) {
     validCoord(origin);
     validCoord(target);
     return ((radToDeg(Math.atan2(distanceEast(origin, target), distanceNorth(origin, target))) + 360) %
         360);
 }
-exports.bearing = bearing;
 function pointNorthOf(origin, dN) {
     validCoord(origin);
     const lon = origin.coordinates[0];
@@ -91,7 +93,6 @@ function pointNorthOf(origin, dN) {
     validCoord(result);
     return result;
 }
-exports.pointNorthOf = pointNorthOf;
 function pointEastOf(origin, dE) {
     validCoord(origin);
     const lat = origin.coordinates[1];
@@ -110,7 +111,6 @@ function pointEastOf(origin, dE) {
         return { coordinates: [lon, lat], type: 'Point' };
     }
 }
-exports.pointEastOf = pointEastOf;
 function pointAbove(origin, dH) {
     validCoord(origin);
     return {
@@ -118,7 +118,6 @@ function pointAbove(origin, dH) {
         type: 'Point'
     };
 }
-exports.pointAbove = pointAbove;
 function degToRad(deg) {
     return (deg * Math.PI) / 180;
 }
