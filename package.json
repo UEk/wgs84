@@ -1,6 +1,6 @@
 {
     "name": "@ulrik.ek/wgs84",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Basic library for computing small distances between WGS84 coordinates using a flat earth approximation.",
     "author": "Ulrik E.",
     "license": "MIT",
