@@ -63,7 +63,7 @@ pointEastOf(origin: Point, dE: number): Point;
 pointAbove(origin: Point, dH: number): Point;
 ```
 
-[Full Typedoc documentation](https://github.com/UEk/wgs84/blob/main/doc/modules.md)
+[Full Typedoc documentation](https://github.com/UEk/wgs84/blob/main/doc/globals.md)
 
 # Build and Test
 
