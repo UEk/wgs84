@@ -1,4 +1,4 @@
-[**@ulrik.ek/wgs84**](../README.md) • **Docs**
+[**@ulrik.ek/wgs84**](../README.md)
 
 ***
 
@@ -6,22 +6,30 @@
 
 # Function: point()
 
-> **point**(`lat`, `lon`, `height`?): [`Point`](../interfaces/Point.md)
+> **point**(`lat`, `lon`, `height?`): [`Point`](../interfaces/Point.md)
+
+Defined in: [index.ts:18](https://github.com/UEk/wgs84/blob/d77ad0ecc1b3a330d6e512061e047b1ca284314c/src/index.ts#L18)
 
 creates a GeoJSON Point
 will throw for impossible input
 
 ## Parameters
 
-• **lat**: `number`
+### lat
+
+`number`
 
 in degrees, has to be -90 < lat < 90
 
-• **lon**: `number`
+### lon
+
+`number`
 
 in degrees, has to be -180 <= lon <= 180
 
-• **height?**: `number`
+### height?
+
+`number`
 
 in meters
 
@@ -30,7 +38,3 @@ in meters
 [`Point`](../interfaces/Point.md)
 
 GeoJSON Point
-
-## Defined in
-
-[index.ts:18](https://github.com/UEk/wgs84/blob/7f15499841cff3193653ccb3eb4cdc78317fda40/src/index.ts#L18)

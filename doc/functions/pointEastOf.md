@@ -1,4 +1,4 @@
-[**@ulrik.ek/wgs84**](../README.md) • **Docs**
+[**@ulrik.ek/wgs84**](../README.md)
 
 ***
 
@@ -8,16 +8,22 @@
 
 > **pointEastOf**(`origin`, `dE`): [`Point`](../interfaces/Point.md)
 
+Defined in: [index.ts:177](https://github.com/UEk/wgs84/blob/d77ad0ecc1b3a330d6e512061e047b1ca284314c/src/index.ts#L177)
+
 Gives a new point at a distance dE east of the current point
 will throw for impossible input
 
 ## Parameters
 
-• **origin**: [`Point`](../interfaces/Point.md)
+### origin
+
+[`Point`](../interfaces/Point.md)
 
 the origin point in GeoJson
 
-• **dE**: `number`
+### dE
+
+`number`
 
 the distance in meters along an eastern meridian, negative number gives distance to west
 
@@ -26,7 +32,3 @@ the distance in meters along an eastern meridian, negative number gives distance
 [`Point`](../interfaces/Point.md)
 
 GeoJson Point
-
-## Defined in
-
-[index.ts:177](https://github.com/UEk/wgs84/blob/7f15499841cff3193653ccb3eb4cdc78317fda40/src/index.ts#L177)

@@ -1,4 +1,4 @@
-[**@ulrik.ek/wgs84**](../README.md) • **Docs**
+[**@ulrik.ek/wgs84**](../README.md)
 
 ***
 
@@ -8,15 +8,21 @@
 
 > **distanceUp**(`origin`, `target`): `number`
 
+Defined in: [index.ts:100](https://github.com/UEk/wgs84/blob/d77ad0ecc1b3a330d6e512061e047b1ca284314c/src/index.ts#L100)
+
 Calculates the vertical distance in meters
 
 ## Parameters
 
-• **origin**: [`Point`](../interfaces/Point.md)
+### origin
+
+[`Point`](../interfaces/Point.md)
 
 the starting point in GeoJson
 
-• **target**: [`Point`](../interfaces/Point.md)
+### target
+
+[`Point`](../interfaces/Point.md)
 
 the ending point in GeoJson
 
@@ -25,7 +31,3 @@ the ending point in GeoJson
 `number`
 
 meters
-
-## Defined in
-
-[index.ts:100](https://github.com/UEk/wgs84/blob/7f15499841cff3193653ccb3eb4cdc78317fda40/src/index.ts#L100)
