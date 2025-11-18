@@ -30,4 +30,4 @@ degrees
 
 ## Defined in
 
-[index.ts:138](https://github.com/UEk/wgs84/blob/115767c3576319ff56122f2199f41fb59f155d24/src/index.ts#L138)
+[index.ts:138](https://github.com/UEk/wgs84/blob/7f15499841cff3193653ccb3eb4cdc78317fda40/src/index.ts#L138)
