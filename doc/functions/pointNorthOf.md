@@ -8,7 +8,7 @@
 
 > **pointNorthOf**(`origin`, `dN`): [`Point`](../interfaces/Point.md)
 
-Defined in: [index.ts:155](https://github.com/UEk/wgs84/blob/d77ad0ecc1b3a330d6e512061e047b1ca284314c/src/index.ts#L155)
+Defined in: [index.ts:172](https://github.com/UEk/wgs84/blob/770e131198d296027838c31004a9cb9b904b9492/src/index.ts#L172)
 
 Gives a new point at a distance dN north of the current point
 will throw for impossible input

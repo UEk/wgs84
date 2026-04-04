@@ -8,7 +8,7 @@
 
 > **distanceEast**(`origin`, `target`): `number`
 
-Defined in: [index.ts:79](https://github.com/UEk/wgs84/blob/d77ad0ecc1b3a330d6e512061e047b1ca284314c/src/index.ts#L79)
+Defined in: [index.ts:80](https://github.com/UEk/wgs84/blob/770e131198d296027838c31004a9cb9b904b9492/src/index.ts#L80)
 
 Calculates the distance in meters along an eastern meridian
 will throw for impossible input

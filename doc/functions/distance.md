@@ -8,7 +8,7 @@
 
 > **distance**(`origin`, `target`): `number`
 
-Defined in: [index.ts:116](https://github.com/UEk/wgs84/blob/d77ad0ecc1b3a330d6e512061e047b1ca284314c/src/index.ts#L116)
+Defined in: [index.ts:59](https://github.com/UEk/wgs84/blob/770e131198d296027838c31004a9cb9b904b9492/src/index.ts#L59)
 
 Calculates the distance in meters between origin and target
 Will take height into consideration, if given for both points

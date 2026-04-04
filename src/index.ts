@@ -3,8 +3,8 @@
  * https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/geojson/index.d.ts
  */
 export interface Point {
-    type: 'Point';
     coordinates: number[];
+    type: 'Point';
 }
 
 /**
@@ -31,78 +31,21 @@ const f: number = 1 / 298.257_223_563;
 const eSquared: number = f * (2 - f);
 
 /**
- * The meridional radius of curvature at a certain geographical position
+ * Calculates the bearing from origin to target in the plane
+ * with 0 degrees being north, and 90 degrees being east
  * will throw for impossible input
- * @param position The current position in GeoJson
- * @returns meters
+ * @param origin the origin point in GeoJson
+ * @param target the target point in GeoJson
+ * @returns degrees
  */
-export function R1(position: Point): number {
-    validCoord(position);
-    const lat = degToRad(position.coordinates[1]);
-    return (R * (1 - eSquared)) / Math.pow(1 - eSquared * Math.pow(Math.sin(lat), 2), 3 / 2);
-}
-
-/**
- * The radius of curvature in the prime vertical at a certain geographical position
- * will throw for impossible input
- * @param position The current position in GeoJson
- * @returns meters
- */
-export function R2(position: Point): number {
-    validCoord(position);
-    const lat = degToRad(position.coordinates[1]);
-    return R / Math.sqrt(1 - eSquared * Math.pow(Math.sin(lat), 2));
-}
-
-/**
- * Calculates the distance in meters along a northern meridian
- * will throw for impossible input
- * @param origin the starting point in GeoJson
- * @param target the ending point in GeoJson
- * @returns meters
- */
-export function distanceNorth(origin: Point, target: Point): number {
+export function bearing(origin: Point, target: Point): number {
     validCoord(origin);
     validCoord(target);
-    const originLat = degToRad(origin.coordinates[1]);
-    const targetLat = degToRad(target.coordinates[1]);
-    return R1(origin) * (targetLat - originLat);
-}
-
-/**
- * Calculates the distance in meters along an eastern meridian
- * will throw for impossible input
- * @param origin the starting point in GeoJson
- * @param target the ending point in GeoJson
- * @returns meters
- */
-export function distanceEast(origin: Point, target: Point): number {
-    validCoord(origin);
-    validCoord(target);
-    const originLat = degToRad(origin.coordinates[1]);
-    const originLon = degToRad(origin.coordinates[0]);
-    const targetLon = degToRad(target.coordinates[0]);
-    let deltaAngle: number = targetLon - originLon;
-    if (deltaAngle > Math.PI) {
-        deltaAngle -= 2 * Math.PI;
-    } else if (targetLon - originLon < -Math.PI) {
-        deltaAngle += 2 * Math.PI;
-    }
-    return R2(origin) * Math.cos(originLat) * deltaAngle;
-}
-
-/**
- * Calculates the vertical distance in meters
- * @param origin the starting point in GeoJson
- * @param target the ending point in GeoJson
- * @returns meters
- */
-export function distanceUp(origin: Point, target: Point): number {
-    if (origin.coordinates.length === 3 && target.coordinates.length === 3) {
-        return target.coordinates[2] - origin.coordinates[2];
-    } else {
-        throw new Error('Input is not GeoJSON Point with height.');
-    }
+    // mod(atan2(distance_East, distance_North), 2*pi)
+    return (
+        (radToDeg(Math.atan2(distanceEast(origin, target), distanceNorth(origin, target))) + 360) %
+        360
+    );
 }
 
 /**
@@ -128,43 +71,69 @@ export function distance(origin: Point, target: Point): number {
 }
 
 /**
- * Calculates the bearing from origin to target in the plane
- * with 0 degrees being north, and 90 degrees being east
+ * Calculates the distance in meters along an eastern meridian
  * will throw for impossible input
- * @param origin the origin point in GeoJson
- * @param target the target point in GeoJson
- * @returns degrees
+ * @param origin the starting point in GeoJson
+ * @param target the ending point in GeoJson
+ * @returns meters
  */
-export function bearing(origin: Point, target: Point): number {
+export function distanceEast(origin: Point, target: Point): number {
     validCoord(origin);
     validCoord(target);
-    // mod(atan2(distance_East, distance_North), 2*pi)
-    return (
-        (radToDeg(Math.atan2(distanceEast(origin, target), distanceNorth(origin, target))) + 360) %
-        360
-    );
+    const originLat = degToRad(origin.coordinates[1]);
+    const originLon = degToRad(origin.coordinates[0]);
+    const targetLon = degToRad(target.coordinates[0]);
+    let deltaAngle: number = targetLon - originLon;
+    if (deltaAngle > Math.PI) {
+        deltaAngle -= 2 * Math.PI;
+    } else if (targetLon - originLon < -Math.PI) {
+        deltaAngle += 2 * Math.PI;
+    }
+    return R2(origin) * Math.cos(originLat) * deltaAngle;
 }
 
 /**
- * Gives a new point at a distance dN north of the current point
+ * Calculates the distance in meters along a northern meridian
+ * will throw for impossible input
+ * @param origin the starting point in GeoJson
+ * @param target the ending point in GeoJson
+ * @returns meters
+ */
+export function distanceNorth(origin: Point, target: Point): number {
+    validCoord(origin);
+    validCoord(target);
+    const originLat = degToRad(origin.coordinates[1]);
+    const targetLat = degToRad(target.coordinates[1]);
+    return R1(origin) * (targetLat - originLat);
+}
+
+/**
+ * Calculates the vertical distance in meters
+ * @param origin the starting point in GeoJson
+ * @param target the ending point in GeoJson
+ * @returns meters
+ */
+export function distanceUp(origin: Point, target: Point): number {
+    if (origin.coordinates.length === 3 && target.coordinates.length === 3) {
+        return target.coordinates[2] - origin.coordinates[2];
+    } else {
+        throw new Error('Input is not GeoJSON Point with height.');
+    }
+}
+
+/**
+ * Gives a new point at a height dH above the current point
  * will throw for impossible input
  * @param origin the origin point in GeoJson
- * @param dN the distance in meters along a northern meridian, negative number gives distance to south
+ * @param dH the distance up in meters, negative number gives a lower height
  * @returns GeoJson Point
  */
-export function pointNorthOf(origin: Point, dN: number): Point {
+export function pointAbove(origin: Point, dH: number): Point {
     validCoord(origin);
-    const lon: number = origin.coordinates[0];
-    const lat: number = radToDeg(degToRad(origin.coordinates[1]) + dN / R1(origin));
-    let result: Point;
-    if (origin.coordinates[2]) {
-        const h = origin.coordinates[2];
-        result = { coordinates: [lon, lat, h], type: 'Point' };
-    } else {
-        result = { coordinates: [lon, lat], type: 'Point' };
-    }
-    validCoord(result);
-    return result;
+    return {
+        coordinates: [origin.coordinates[0], origin.coordinates[1], origin.coordinates[2] + dH],
+        type: 'Point'
+    };
 }
 
 /**
@@ -194,18 +163,49 @@ export function pointEastOf(origin: Point, dE: number): Point {
 }
 
 /**
- * Gives a new point at a height dH above the current point
+ * Gives a new point at a distance dN north of the current point
  * will throw for impossible input
  * @param origin the origin point in GeoJson
- * @param dH the distance up in meters, negative number gives a lower height
+ * @param dN the distance in meters along a northern meridian, negative number gives distance to south
  * @returns GeoJson Point
  */
-export function pointAbove(origin: Point, dH: number): Point {
+export function pointNorthOf(origin: Point, dN: number): Point {
     validCoord(origin);
-    return {
-        coordinates: [origin.coordinates[0], origin.coordinates[1], origin.coordinates[2] + dH],
-        type: 'Point'
-    };
+    const lon: number = origin.coordinates[0];
+    const lat: number = radToDeg(degToRad(origin.coordinates[1]) + dN / R1(origin));
+    let result: Point;
+    if (origin.coordinates[2]) {
+        const h = origin.coordinates[2];
+        result = { coordinates: [lon, lat, h], type: 'Point' };
+    } else {
+        result = { coordinates: [lon, lat], type: 'Point' };
+    }
+    validCoord(result);
+    return result;
+}
+
+/**
+ * The meridional radius of curvature at a certain geographical position
+ * will throw for impossible input
+ * @param position The current position in GeoJson
+ * @returns meters
+ */
+export function R1(position: Point): number {
+    validCoord(position);
+    const lat = degToRad(position.coordinates[1]);
+    return (R * (1 - eSquared)) / Math.pow(1 - eSquared * Math.pow(Math.sin(lat), 2), 3 / 2);
+}
+
+/**
+ * The radius of curvature in the prime vertical at a certain geographical position
+ * will throw for impossible input
+ * @param position The current position in GeoJson
+ * @returns meters
+ */
+export function R2(position: Point): number {
+    validCoord(position);
+    const lat = degToRad(position.coordinates[1]);
+    return R / Math.sqrt(1 - eSquared * Math.pow(Math.sin(lat), 2));
 }
 
 function degToRad(deg: number): number {
