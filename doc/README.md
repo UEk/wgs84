@@ -4,7 +4,7 @@
 
 # micro-wgs84
 
-**Fast, lightweight, and precise flat-earth geodesy for TypeScript.**
+**Fast, lightweight, and precise flat-earth geodesy based on WGS84 and GeoJSON for TypeScript.**
 
 [![npm version](https://img.shields.io/npm/v/micro-wgs84.svg)](https://www.npmjs.com/package/micro-wgs84)
 
@@ -60,7 +60,9 @@ The library provides a clean API for geometric operations. For the full technica
 - `distance(origin, target)`: Total distance between points in meters.
 - `bearing(origin, target)`: Bearing between points in degrees.
 - `distanceNorth / distanceEast / distanceUp`: Component distances.
-- `pointNorthOf / pointEastOf / pointAbove`: Project new points based on offset.
+- `pointNorthOf / pointEastOf / pointAbove`: Project new points based on offset in meters.
+
+_Note that Points that are not valid (e.g. latitude > 90 degrees) will throw! Be sure to handle that!_
 
 # Important Note on Accuracy
 
