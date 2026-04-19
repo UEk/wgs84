@@ -43,9 +43,10 @@ console.log(`Total distance=${wgs84.distance(p, p1).toFixed(3)}m`);
 
 This will produce the following output
 
-> lat=59.329327, lon=18.079864
-> 
-> Total distance=500.025m
+```bash
+lat=59.329327, lon=18.079864
+Total distance=500.025m
+```
 
 ## API Documentation
 
