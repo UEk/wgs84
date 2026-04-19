@@ -1,8 +1,8 @@
-[**@ulrik.ek/wgs84**](README.md)
+[**micro-wgs84**](README.md)
 
 ***
 
-# @ulrik.ek/wgs84
+# micro-wgs84
 
 ## Interfaces
 

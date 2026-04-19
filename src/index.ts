@@ -154,7 +154,7 @@ export function pointEastOf(origin: Point, dE: number): Point {
     } else if (lon < -180) {
         lon += 360;
     }
-    if (origin.coordinates[2]) {
+    if (origin.coordinates[2] !== undefined) {
         const h = origin.coordinates[2];
         return { coordinates: [lon, lat, h], type: 'Point' };
     } else {
@@ -174,7 +174,7 @@ export function pointNorthOf(origin: Point, dN: number): Point {
     const lon: number = origin.coordinates[0];
     const lat: number = radToDeg(degToRad(origin.coordinates[1]) + dN / R1(origin));
     let result: Point;
-    if (origin.coordinates[2]) {
+    if (origin.coordinates[2] !== undefined) {
         const h = origin.coordinates[2];
         result = { coordinates: [lon, lat, h], type: 'Point' };
     } else {
@@ -193,7 +193,9 @@ export function pointNorthOf(origin: Point, dN: number): Point {
 export function R1(position: Point): number {
     validCoord(position);
     const lat = degToRad(position.coordinates[1]);
-    return (R * (1 - eSquared)) / Math.pow(1 - eSquared * Math.pow(Math.sin(lat), 2), 3 / 2);
+    const sinLat = Math.sin(lat);
+    const commonTerm = 1 - eSquared * sinLat * sinLat;
+    return (R * (1 - eSquared)) / (commonTerm * Math.sqrt(commonTerm));
 }
 
 /**
@@ -205,7 +207,8 @@ export function R1(position: Point): number {
 export function R2(position: Point): number {
     validCoord(position);
     const lat = degToRad(position.coordinates[1]);
-    return R / Math.sqrt(1 - eSquared * Math.pow(Math.sin(lat), 2));
+    const sinLat = Math.sin(lat);
+    return R / Math.sqrt(1 - eSquared * sinLat * sinLat);
 }
 
 function degToRad(deg: number): number {

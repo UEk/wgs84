@@ -1,17 +1,12 @@
 import * as wgs84 from '../dist';
 
-// helper function to construct a GeoJSON Point
-const lat = 15;
-const lon = 25;
-const p: wgs84.Point = wgs84.point(lat, lon);
+// 1. Create points (lat, lon)
+const p = wgs84.point(59.326634, 18.072837); // Royal castle, Stockholm
 
-// Getting a new point 100m north and 200m east of the first point
+// 2. Project new coordinates
+// Get a point 300m North and 400m East of origin
 const p1: wgs84.Point = wgs84.pointEastOf(wgs84.pointNorthOf(p, 300), 400);
-const newLat = p1.coordinates[1]; // GeoJSON uses [lon, lat] order!
-const newLon = p1.coordinates[0];
-console.log(`lat=${newLat}, lon=${newLon}`);
+console.log(`lat=${p1.coordinates[1].toFixed(6)}, lon=${p1.coordinates[0].toFixed(6)}`); // GeoJSON uses [lon, lat] order!
 
-// get the distance along north between the 2 points
-console.log(`Distance along north=${wgs84.distanceNorth(p, p1)}`);
-console.log(`Distance along east=${wgs84.distanceEast(p, p1)}`);
-console.log(`Total distance=${wgs84.distance(p, p1)}`);
+// 3, Get the distance between the 2 points
+console.log(`Total distance=${wgs84.distance(p, p1).toFixed(3)}m`);
