@@ -1,6 +1,6 @@
 {
     "name": "@ulrik.ek/wgs84",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "description": "Basic library for computing small distances between WGS84 coordinates using a flat earth approximation.",
     "author": "Ulrik E.",
     "license": "MIT",
@@ -9,7 +9,12 @@
         "doc": "doc",
         "test": "test"
     },
-    "files": ["dist", "doc", "README.md", "LICENSE"],
+    "files": [
+        "dist",
+        "doc",
+        "README.md",
+        "LICENSE"
+    ],
     "type": "commonjs",
     "scripts": {
         "audit": "npm audit --registry=https://registry.npmjs.org",
@@ -51,5 +56,10 @@
         "url": "https://github.com/UEk/wgs84/issues"
     },
     "homepage": "https://github.com/UEk/wgs84#readme",
-    "keywords": ["wgs84", "geojson", "latitude", "longitude"]
+    "keywords": [
+        "wgs84",
+        "geojson",
+        "latitude",
+        "longitude"
+    ]
 }
